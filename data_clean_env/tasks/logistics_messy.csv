@@ -1,0 +1,52 @@
+tracking_id,origin,destination,carrier,weight_kg,ship_date,status
+TRK0000001,Shenzhen,London,dhl,60.8,09/15/2025,IN_TRANSIT
+TRK0000002,Los Angeles,New York,MSC,485.1,2025-10-09,in_transit
+TRK0000002,  Los Angeles  ,  New York  ,msc,485.1,10/09/2025,  in_transit  
+TRK0000003,Mumbai,  London  ,ups,,2023-02-03,DELAYED
+TRK0000004,DUBAI,Tokyo,FEDEX,151.1,06-06-2024,returned
+TRK0000005,Singapore,dubai,MAERSK,56.3,2025-05-08,customs
+TRK0000006,los angeles,  Hamburg  ,ups,,06/19/2024,IN_TRANSIT
+TRK0000007,  Los Angeles  ,singapore,CMA CGM,283.6,2025-04-07,  customs  
+TRK0000008,dubai,london,fedex,317.4,06-14-2025,
+TRK0000009,DUBAI,  New York  ,dhl,49.7,09/30/2023,in_transit
+TRK0000010,Dubai,Dubai,msc,60.3,04-19-2023,returned
+TRK0000011,  Mumbai  ,London,  UPS  ,171.2,2023-05-31,
+TRK0000012,ROTTERDAM,Singapore,DHL,385.0,05/08/2024,DELIVERED
+TRK0000013,  Singapore  ,SYDNEY,CMA CGM,341.4,2025-07-21,delivered
+TRK0000014,Singapore,  Tokyo  ,COSCO,4.0,2023-10-02,DELAYED
+TRK0000015,Singapore,mumbai,COSCO,255.9,08-05-2024,in_transit
+TRK0000016,mumbai,SYDNEY,DHL,66.2,01-12-2023,customs
+TRK0000017,  Los Angeles  ,Singapore,cosco,92.2,2023-04-11,customs
+TRK0000018,mumbai,  Dubai  ,  COSCO  ,101.7,2025-06-14,returned
+TRK0000019,dubai,SYDNEY,dhl,49.6,2025-02-27,
+TRK0000020,SHENZHEN,  Sydney  ,MSC,465.6,2023-07-02,  customs  
+TRK0000021,SHANGHAI,Tokyo,COSCO,82.8,15-07-2024,  customs  
+TRK0000022,  Rotterdam  ,tokyo,  DHL  ,92.3,24-01-2024,  customs  
+TRK0000023,shenzhen,  Tokyo  ,  CMA CGM  ,357.6,05-06-2024,
+TRK0000024,SHENZHEN,  Tokyo  ,  Evergreen  ,130.2,2023-08-19,returned
+TRK0000025,Singapore,Tokyo,cosco,61.1,09/12/2024,  in_transit  
+TRK0000026,shanghai,  New York  ,Maersk,9.3,2025-02-03,delivered
+TRK0000027,DUBAI,LONDON,  DHL  ,312.6,2024-06-05,delivered
+TRK0000028,HAMBURG,  Singapore  ,maersk,135.9,06-16-2024,  in_transit  
+TRK0000029,Dubai,NEW YORK,  Evergreen  ,161.6,02/24/2024,delivered
+TRK0000030,  Rotterdam  ,  Tokyo  ,  Maersk  ,268.0,17-08-2025,
+TRK0000031,MUMBAI,  Tokyo  ,fedex,39.2,03-09-2023,IN_TRANSIT
+TRK0000032,singapore,LONDON,EVERGREEN,462.7,02/24/2024,  delayed  
+TRK0000033,  Shenzhen  ,Mumbai,FEDEX,97.4,01-05-2024,returned
+TRK0000034,  Los Angeles  ,  London  ,fedex,316.4,21-08-2025,delayed
+TRK0000035,  Shanghai  ,DUBAI,  MSC  ,425.3,18-08-2023,CUSTOMS
+TRK0000036,  Singapore  ,sydney,  UPS  ,40.8,2025-11-12,delayed
+TRK0000037,Los Angeles,New York,dhl,359.7,2023-03-04,  customs  
+TRK0000038,Hamburg,hamburg,DHL,,03-01-2024,  customs  
+TRK0000039,rotterdam,SYDNEY,COSCO,330.3,2025-08-29,  customs  
+TRK0000040,  Rotterdam  ,singapore,  CMA CGM  ,0.8,01-17-2024,  delivered  
+TRK0000041,los angeles,London,fedex,360.5,11-03-2023,delivered
+TRK0000042,Singapore,SINGAPORE,  UPS  ,167.7,12-05-2023,delayed
+TRK0000043,Rotterdam,LONDON,MSC,370.3,11-20-2023,  in_transit  
+TRK0000044,los angeles,HAMBURG,EVERGREEN,128.8,10-30-2025,  in_transit  
+TRK0000045,DUBAI,  London  ,MSC,423.6,2024-09-10,delayed
+TRK0000046,  Hamburg  ,tokyo,COSCO,15.0,2023-10-20,delayed
+TRK0000047,Singapore,London,DHL,303.2,2024-05-18,in_transit
+TRK0000048,  Shenzhen  ,TOKYO,  DHL  ,179.9,2024-04-26,delivered
+TRK0000049,Mumbai,Tokyo,MAERSK,3.5,03-04-2025,DELAYED
+TRK0000050,SINGAPORE,Sydney,COSCO,403.6,2025-09-16,  in_transit  

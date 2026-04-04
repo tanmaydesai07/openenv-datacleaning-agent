@@ -1,0 +1,51 @@
+patient_id,name,condition,appointment_date,doctor,insurance_id,status
+PT00001,Jessica Lewis,Back Pain,2024-08-07,Dr. Brown,INS-475246,cancelled
+PT00002,Mary Robinson,Migraine,2023-12-18,Dr. Garcia,INS-734155,scheduled
+PT00003,Jessica Lee,Hypertension,2024-10-06,Dr. Brown,INS-190723,scheduled
+PT00004,Jessica Robinson,Migraine,2023-10-03,Dr. Smith,INS-934002,no-show
+PT00005,Richard Lee,Anxiety,2025-03-28,Dr. Patel,INS-409184,cancelled
+PT00006,Barbara Martinez,Diabetes,2024-04-28,Dr. Kim,INS-436436,scheduled
+PT00007,William Martinez,Asthma,2024-09-12,Dr. Chen,INS-231205,completed
+PT00008,James Wright,Arthritis,2024-05-08,Dr. Chen,INS-301724,scheduled
+PT00009,Linda Lee,Migraine,2023-09-30,Dr. Kim,INS-179066,no-show
+PT00010,William Lee,Anxiety,2025-11-11,Dr. Kim,INS-905533,completed
+PT00011,Robert Martinez,Depression,2025-05-08,Dr. Lee,INS-413181,no-show
+PT00012,Mary Young,Hypertension,2023-03-29,Dr. Kim,INS-870269,scheduled
+PT00013,Mary Wright,Hypertension,2025-08-14,Dr. Garcia,INS-944886,completed
+PT00014,William Lee,Back Pain,2025-07-16,Dr. Lee,INS-122982,cancelled
+PT00015,Linda Young,Arthritis,2024-07-27,Dr. Chen,INS-726440,cancelled
+PT00016,Linda Robinson,Migraine,2025-03-09,Dr. Garcia,INS-612729,cancelled
+PT00017,Jessica Martinez,Diabetes,2024-04-29,Dr. Lee,INS-805760,no-show
+PT00018,Robert Hall,Migraine,2024-01-17,Dr. Kim,INS-363472,scheduled
+PT00019,Susan Allen,Migraine,2025-02-14,Dr. Lee,INS-415490,completed
+PT00020,Linda Young,Arthritis,2023-08-18,Dr. Kim,INS-866825,no-show
+PT00021,Jennifer Lewis,Hypertension,2025-02-06,Dr. Lee,INS-606014,completed
+PT00022,John Wright,Depression,2024-12-24,Dr. Smith,INS-428607,no-show
+PT00023,Mary Hall,Depression,2024-07-23,Dr. Chen,INS-554593,no-show
+PT00024,Linda Allen,Anxiety,2025-12-02,Dr. Smith,INS-676749,cancelled
+PT00025,Jennifer Lewis,Migraine,2024-01-05,Dr. Lee,INS-128350,no-show
+PT00026,Richard Wright,Arthritis,2025-10-11,Dr. Chen,INS-244537,no-show
+PT00027,David Lewis,Hypertension,2024-11-18,Dr. Chen,INS-734014,cancelled
+PT00028,Jessica King,Arthritis,2025-03-14,Dr. Lee,INS-828514,scheduled
+PT00029,John Robinson,Hypertension,2023-04-11,Dr. Davis,INS-555085,cancelled
+PT00030,Richard Wright,Anxiety,2025-01-22,Dr. Kim,INS-602889,scheduled
+PT00031,Barbara Martinez,Diabetes,2024-11-03,Dr. Kim,INS-355307,scheduled
+PT00032,Joseph Robinson,Arthritis,2023-05-01,Dr. Chen,INS-462131,completed
+PT00033,David Martinez,Anxiety,2025-10-01,Dr. Patel,INS-320256,scheduled
+PT00034,Linda Walker,Asthma,2024-09-14,Dr. Brown,INS-536029,scheduled
+PT00035,Richard King,Hypertension,2023-11-12,Dr. Patel,INS-374114,completed
+PT00036,Joseph Robinson,Back Pain,2023-04-19,Dr. Chen,INS-456266,no-show
+PT00037,Patricia Martinez,Diabetes,2024-03-29,Dr. Lee,INS-976736,completed
+PT00038,Joseph Allen,Diabetes,2023-10-10,Dr. Kim,INS-864110,no-show
+PT00039,David Lewis,Arthritis,2025-11-05,Dr. Brown,INS-135923,completed
+PT00040,James Wright,Hypertension,2025-05-08,Dr. Patel,INS-658185,completed
+PT00041,Elizabeth Hall,Anxiety,2023-12-29,Dr. Chen,INS-983773,cancelled
+PT00042,James Wright,Back Pain,2023-06-13,Dr. Brown,INS-110377,cancelled
+PT00043,Richard Robinson,Diabetes,2024-07-20,Dr. Lee,INS-889945,no-show
+PT00044,Michael Lewis,Asthma,2023-11-13,Dr. Smith,INS-235117,no-show
+PT00045,Mary Robinson,Back Pain,2024-04-12,Dr. Patel,INS-385647,scheduled
+PT00046,John Martinez,Depression,2025-03-16,Dr. Chen,INS-770880,no-show
+PT00047,James Robinson,Hypertension,2024-03-30,Dr. Patel,INS-393319,completed
+PT00048,Elizabeth Walker,Asthma,2025-07-18,Dr. Smith,INS-504185,cancelled
+PT00049,Linda Allen,Migraine,2025-08-31,Dr. Davis,INS-925903,no-show
+PT00050,Susan Wright,Asthma,2023-09-10,Dr. Davis,INS-160320,scheduled

@@ -1,0 +1,55 @@
+employee_id,name,department,salary,hire_date,city,email
+EMP0001,diana smith,finance,$72098,04-02-2024,Tokyo,  diana.thompson@company.com  
+EMP0002,Charlie Robinson,  Legal  ,$44165,03/03/2023,London,grace.davis@example
+EMP0003,Quinn Clark,  Engineering  ,  $113563  ,2024-02-12,Paris,henry.white@company.com
+EMP0004,SAM WILSON,Engineering,$139458,23-11-2023,Paris,karen.wilson@company.com
+EMP0005,Eve Miller,OPERATIONS,  $53396  ,09-07-2023,Paris,diana.anderson@example
+EMP0006,Leo Clark,  Finance  ,145791,2023-03-30,Mumbai,rosa.brown@company.com
+EMP0007,mia williams,  Finance  ,148711,10-01-2025,Berlin,CHARLIE.JOHNSON@COMPANY.COM
+EMP0008,  Henry Moore  ,Marketing,70512,2023-07-26,Paris,ivy.whitecompany.com
+EMP0009,LEO GARCIA,  Operations  ,  $86566  ,03/05/2024,Sydney,charlie.clarkcompany.com
+EMP0010,Frank Thompson,HR,61417,2025-08-04,Paris,ivy.thompson@company.com
+EMP0010,frank thompson,HR,$61417,2025-08-04,Paris,  ivy.thompson@company.com  
+EMP0011,Henry Taylor,engineering,70021 USD,03/07/2023,Toronto,MIA.WILSON@COMPANY.COM
+EMP0012,Charlie Miller,OPERATIONS,67869 USD,10/19/2025,Paris,  olivia.jones@company.com  
+EMP0013,  Ivy Jones  ,HR,137647,22-06-2024,Paris,  sam.thomas@company.com  
+EMP0014,leo davis,  Sales  ,106784,10-07-2025,London,bob.brown@example
+EMP0015,EVE GARCIA,legal,118172 USD,05-11-2023,,  mia.clark@company.com  
+EMP0016,Olivia Martin,Finance,$112512,01-24-2023,London,  rosa.wilson@company.com  
+EMP0017,Karen Brown,Finance,96985,2023-11-20,Mumbai,alice.wilson@company.com
+EMP0017,Karen Brown,Finance,$96985,2023-11-20,Mumbai,alice.wilson@example
+EMP0018,quinn garcia,Marketing,121959 USD,2024-09-03,Berlin,  eve.anderson@company.com  
+EMP0019,frank thompson,Engineering,,25-10-2024,Mumbai,alice.brown@company.com
+EMP0020,Leo Moore,HR,47592,2024-05-08,London,charlie.harris@company.com
+EMP0020,Leo Moore,hr,47592,05-08-2024,London,CHARLIE.HARRIS@COMPANY.COM
+EMP0021,Charlie Thompson,  Sales  ,56828,2025-08-31,,IVY.MARTIN@COMPANY.COM
+EMP0022,tina jackson,HR,$110686,02/16/2024,Sydney,
+EMP0023,OLIVIA MARTIN,it,55860,2024-05-22,Berlin,charlie.taylor@example
+EMP0024,alice robinson,  HR  ,$117128,27-03-2024,New York,CHARLIE.JOHNSON@COMPANY.COM
+EMP0025,henry williams,ENGINEERING,83309 USD,05/26/2023,Berlin,ivy.harris@example
+EMP0026,GRACE THOMPSON,  Sales  ,134811,2025-08-26,Berlin,PAUL.JACKSON@COMPANY.COM
+EMP0027,GRACE BROWN,Marketing,  $126374  ,2025-06-01,Toronto,noah.jacksoncompany.com
+EMP0028,Olivia Johnson,Marketing,47944,04-04-2025,Toronto,diana.davis@example
+EMP0029,Grace Miller,it,58373,14-05-2025,Tokyo,ivy.white@company.com
+EMP0030,Henry Williams,it,  $145909  ,2023-07-20,New York,rosa.smith@example
+EMP0031,charlie davis,SALES,93269 USD,2025-09-21,Mumbai,  grace.thomas@company.com  
+EMP0032,Bob Garcia,LEGAL,$40282,2025-03-10,Sydney,olivia.moorecompany.com
+EMP0033,  Noah Thompson  ,IT,  $60289  ,2024-01-24,Sydney,  grace.johnson@company.com  
+EMP0034,SAM THOMPSON,engineering,138038 USD,10-04-2024,New York,  bob.robinson@company.com  
+EMP0035,PAUL MARTIN,sales,  $47455  ,11-06-2025,London,
+EMP0036,TINA WILLIAMS,  HR  ,92923 USD,2023-09-03,Berlin,SAM.CLARK@COMPANY.COM
+EMP0037,bob clark,MARKETING,  $94948  ,2025-12-06,,IVY.MILLER@COMPANY.COM
+EMP0038,KAREN DAVIS,finance,91876 USD,26-09-2023,Sydney,olivia.taylor@example
+EMP0039,charlie smith,IT,121416,2023-07-24,London,rosa.miller@example
+EMP0040,QUINN WILSON,sales,85745 USD,2023-05-21,,LEO.MOORE@COMPANY.COM
+EMP0041,Frank White,Finance,120173,2025-12-19,New York,rosa.moore@company.com
+EMP0041,Frank White,Finance,  $120173  ,12/19/2025,New York,rosa.moorecompany.com
+EMP0042,diana jones,  Finance  ,55129 USD,2023-08-08,Tokyo,IVY.MOORE@COMPANY.COM
+EMP0043,TINA MILLER,OPERATIONS,66685 USD,2024-06-24,Mumbai,ivy.johnson@company.com
+EMP0044,  Charlie Jackson  ,Finance,  $45778  ,08-01-2023,,eve.wilson@company.com
+EMP0045,  Frank White  ,  Legal  ,$113519,01/20/2023,London,charlie.jonescompany.com
+EMP0046,  Rosa Johnson  ,OPERATIONS,116350 USD,2023-10-31,Paris,eve.johnson@company.com
+EMP0047,Jack Anderson,ENGINEERING,86898,2024-03-06,Berlin,  diana.anderson@company.com  
+EMP0048,Rosa Jackson,  Sales  ,71029,29-11-2023,Tokyo,NOAH.SMITH@COMPANY.COM
+EMP0049,Frank Taylor,LEGAL,145150,2024-05-23,Sydney,FRANK.BROWN@COMPANY.COM
+EMP0050,MIA JOHNSON,it,  $69154  ,13-02-2024,Mumbai,leo.moorecompany.com

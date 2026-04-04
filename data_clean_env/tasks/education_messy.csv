@@ -1,0 +1,53 @@
+student_id,name,subject,grade,semester_date,credits,status
+STU0001,charlotte rodriguez,  Art  ,D,2025-04-24,4,withdrawn
+STU0002,olivia jones,HISTORY,D,2023-06-22,3,incomplete
+STU0003,mia brown,Art,D,2024-02-19,6,withdrawn
+STU0004,  Logan Brown  ,chemistry,C,05/16/2023,4,withdrawn
+STU0005,  Lucas Davis  ,Art,B,01/11/2023,3,
+STU0006,Harper Rodriguez,biology,B,02-08-2024,4,  withdrawn  
+STU0007,mia brown,  Art  ,B,2023-11-18,,INCOMPLETE
+STU0008,isabella rodriguez,  Art  ,A,08/29/2025,6,passed
+STU0009,AIDEN JOHNSON,cs,F,11-09-2023,6,withdrawn
+STU0010,logan johnson,English,B,07/16/2024,3,
+STU0011,  Olivia Jones  ,biology,C,2023-08-04,4,withdrawn
+STU0012,Mason Miller,PHYSICS,B,2023-09-25,4,incomplete
+STU0013,AVA WILLIAMS,CHEMISTRY,B,2024-12-25,3,incomplete
+STU0014,  Lucas Johnson  ,  Biology  ,C,23-01-2023,4,withdrawn
+STU0015,Amelia Garcia,Chemistry,B,24-12-2023,3,PASSED
+STU0016,  Harper Miller  ,History,A,2023-08-02,6,withdrawn
+STU0017,ISABELLA JONES,  Biology  ,C,11-10-2024,4,  passed  
+STU0018,lucas garcia,art,D,03-08-2024,3,incomplete
+STU0019,  Ethan Rodriguez  ,English,C,28-03-2024,3,  passed  
+STU0020,noah johnson,math,A,2025-07-07,3,incomplete
+STU0021,Isabella Garcia,English,D,2024-06-08,3,withdrawn
+STU0021,isabella garcia,English,D,08-06-2024,,WITHDRAWN
+STU0022,  Logan Rodriguez  ,Physics,F,05/24/2024,4,INCOMPLETE
+STU0023,  Aiden Davis  ,english,A,2025-03-24,,INCOMPLETE
+STU0024,  Liam Davis  ,cs,C,2025-01-09,3,WITHDRAWN
+STU0025,MIA JONES,math,C,07-06-2025,3,INCOMPLETE
+STU0026,AMELIA WILLIAMS,english,C,04-24-2025,4,failed
+STU0027,  Amelia Johnson  ,cs,C,2025-12-20,3,FAILED
+STU0028,amelia davis,art,C,2023-11-03,3,failed
+STU0029,EMMA WILLIAMS,english,D,01-29-2024,4,failed
+STU0030,ETHAN BROWN,  Biology  ,D,06-22-2023,4,  passed  
+STU0031,ETHAN MILLER,  Chemistry  ,B,09-26-2023,3,  passed  
+STU0032,Olivia Garcia,HISTORY,F,04-02-2023,4,  incomplete  
+STU0033,LIAM WILLIAMS,chemistry,C,27-09-2024,4,passed
+STU0034,LUCAS RODRIGUEZ,  Biology  ,D,2024-08-17,4,withdrawn
+STU0035,emma miller,CS,D,08-08-2023,3,
+STU0036,  Amelia Rodriguez  ,PHYSICS,F,06/03/2024,3,withdrawn
+STU0037,Mason Davis,  History  ,B,2024-06-14,3,  failed  
+STU0038,Logan Miller,CS,A,2025-02-22,3,passed
+STU0038,LOGAN MILLER,cs,A,02/22/2025,3,passed
+STU0039,  Ava Davis  ,english,D,2024-06-04,4,FAILED
+STU0040,Liam Miller,biology,B,07/12/2023,3,  withdrawn  
+STU0041,amelia jones,  CS  ,A,01/21/2023,3,  failed  
+STU0042,lucas rodriguez,Physics,C,11-15-2023,6,withdrawn
+STU0043,  Emma Garcia  ,  Chemistry  ,C,15-06-2025,3,withdrawn
+STU0044,Mia Johnson,Physics,D,2023-11-02,6,passed
+STU0045,Ethan Miller,HISTORY,F,14-05-2023,6,FAILED
+STU0046,LIAM MILLER,Physics,A,08/06/2024,3,passed
+STU0047,Charlotte Brown,  Biology  ,F,2024-05-29,4,incomplete
+STU0048,ISABELLA BROWN,  Math  ,A,08/25/2025,3,
+STU0049,mia miller,history,B,04-23-2023,4,
+STU0050,Amelia Rodriguez,PHYSICS,D,2023-11-07,4,passed

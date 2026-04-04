@@ -1,0 +1,52 @@
+transaction_id,date,merchant,category,amount,payment_method,status
+TXN000001,2025-10-13,google,  Education  ,171.00 USD,DIGITAL WALLET,
+TXN000002,2024-06-07,Google,Entertainment,5.30,Debit Card,failed
+TXN000002,07-06-2024,google,  Entertainment  ,5.30,,  failed  
+TXN000003,23-03-2023,Microsoft,Healthcare,399.42 USD,BANK TRANSFER,refunded
+TXN000004,2023-01-10,GOOGLE,  Travel  ,114.41 USD,  Bank Transfer  ,FAILED
+TXN000005,11/14/2024,walmart,transport,394.61,  Digital Wallet  ,PENDING
+TXN000006,2023-09-28,  Target  ,healthcare,49.57 USD,DIGITAL WALLET,pending
+TXN000007,2024-07-17,  Google  ,entertainment,168.91 USD,Debit Card,PENDING
+TXN000008,02/21/2024,target,food,25.82 USD,,refunded
+TXN000009,25-10-2025,starbucks,EDUCATION,  $447.74  ,Debit Card,failed
+TXN000010,2023-03-02,Google,transport,$442.96,digital wallet,refunded
+TXN000011,04-04-2023,Uber,TRANSPORT,$159.21,,  pending  
+TXN000012,03/24/2023,AMAZON,  Food  ,220.66,DIGITAL WALLET,REFUNDED
+TXN000013,2023-01-21,Spotify,Travel,$114.88,DEBIT CARD,failed
+TXN000014,2024-12-12,spotify,entertainment,$96.69,  Bank Transfer  ,  refunded  
+TXN000015,2024-12-27,Amazon,healthcare,$363.44,DIGITAL WALLET,  failed  
+TXN000016,2025-06-04,AMAZON,SHOPPING,  $73.28  ,  Credit Card  ,pending
+TXN000017,21-08-2025,google,  Entertainment  ,406.15,  Digital Wallet  ,  refunded  
+TXN000018,01/12/2023,Microsoft,UTILITIES,$10.76,CREDIT CARD,COMPLETED
+TXN000019,08-11-2025,target,Healthcare,  $22.11  ,BANK TRANSFER,failed
+TXN000020,01-12-2024,MICROSOFT,Food,298.24 USD,Bank Transfer,refunded
+TXN000021,25-06-2024,starbucks,  Utilities  ,  $166.73  ,BANK TRANSFER,refunded
+TXN000022,03/15/2023,Apple,shopping,$356.78,DEBIT CARD,PENDING
+TXN000023,10-12-2023,Starbucks,Transport,50.37 USD,Digital Wallet,  refunded  
+TXN000024,2024-03-15,TARGET,HEALTHCARE,$191.02,debit card,  refunded  
+TXN000025,02-25-2025,Target,transport,97.42,bank transfer,completed
+TXN000026,2023-11-21,amazon,ENTERTAINMENT,423.71,BANK TRANSFER,failed
+TXN000027,08-13-2023,SPOTIFY,ENTERTAINMENT,70.58,Credit Card,PENDING
+TXN000028,06-03-2023,  Target  ,  Shopping  ,  $477.17  ,DIGITAL WALLET,PENDING
+TXN000029,04/15/2023,  Amazon  ,SHOPPING,14.16 USD,  Digital Wallet  ,  completed  
+TXN000030,08-04-2025,  Apple  ,Food,$186.18,  Bank Transfer  ,  failed  
+TXN000031,04-30-2023,Starbucks,Food,46.06,Credit Card,
+TXN000032,02/19/2025,Spotify,SHOPPING,  $353.74  ,  Debit Card  ,FAILED
+TXN000033,30-12-2025,  Walmart  ,  Utilities  ,95.56 USD,BANK TRANSFER,completed
+TXN000034,08-23-2023,SPOTIFY,ENTERTAINMENT,$138.13,Digital Wallet,refunded
+TXN000035,2023-11-04,TARGET,Entertainment,$390.19,,pending
+TXN000036,2024-08-03,starbucks,Transport,  $388.59  ,Debit Card,COMPLETED
+TXN000037,08/03/2023,Starbucks,Utilities,$87.21,debit card,completed
+TXN000038,2024-09-04,  Amazon  ,  Transport  ,377.60,Cash,  failed  
+TXN000039,05-12-2024,target,shopping,$224.86,bank transfer,completed
+TXN000040,2024-11-29,microsoft,Shopping,379.08 USD,  Debit Card  ,  pending  
+TXN000041,02/02/2024,apple,Entertainment,$387.91,Debit Card,  completed  
+TXN000042,11/18/2025,Walmart,EDUCATION,$155.75,credit card,  refunded  
+TXN000043,2023-09-05,starbucks,FOOD,303.94,Debit Card,  pending  
+TXN000044,03/15/2025,  Starbucks  ,TRANSPORT,294.96,,  refunded  
+TXN000045,06/14/2023,Google,Transport,95.60,BANK TRANSFER,failed
+TXN000046,10/21/2025,UBER,entertainment,$343.16,CREDIT CARD,  pending  
+TXN000047,15-12-2025,microsoft,FOOD,$209.85,bank transfer,PENDING
+TXN000048,2023-12-19,spotify,TRAVEL,$247.71,credit card,FAILED
+TXN000049,10/11/2025,STARBUCKS,  Education  ,$145.61,Cash,COMPLETED
+TXN000050,2025-03-23,Target,  Education  ,  $116.92  ,Debit Card,  pending  

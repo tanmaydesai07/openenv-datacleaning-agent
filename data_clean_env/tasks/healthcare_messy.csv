@@ -1,0 +1,55 @@
+patient_id,name,condition,appointment_date,doctor,insurance_id,status
+PT00001,JESSICA LEWIS,  Back Pain  ,07-08-2024,  Dr. Brown  ,INS-475246,CANCELLED
+PT00002,  Mary Robinson  ,MIGRAINE,12/18/2023,  Dr. Garcia  ,INS-734155,scheduled
+PT00003,JESSICA LEE,hypertension,2024-10-06,dr. brown,INS-190723,scheduled
+PT00004,Jessica Robinson,Migraine,2023-10-03,Dr. Smith,INS-934002,no-show
+PT00004,JESSICA ROBINSON,MIGRAINE,2023-10-03,dr. smith,INS-934002,NO-SHOW
+PT00005,  Richard Lee  ,Anxiety,2025-03-28,  Dr. Patel  ,INS-409184,CANCELLED
+PT00006,barbara martinez,Diabetes,2024-04-28,Dr. Kim,INS-436436,scheduled
+PT00007,William Martinez,Asthma,2024-09-12,Dr. Chen,INS-231205,completed
+PT00007,  William Martinez  ,asthma,09-12-2024,  Dr. Chen  ,INS-231205,  completed  
+PT00008,james wright,  Arthritis  ,2024-05-08,Dr. Chen,INS-301724,scheduled
+PT00009,LINDA LEE,MIGRAINE,09-30-2023,DR. KIM,,no-show
+PT00010,William Lee,Anxiety,2025-11-11,Dr. Kim,INS-905533,completed
+PT00010,William Lee,Anxiety,2025-11-11,Dr. Kim,INS-905533,COMPLETED
+PT00011,robert martinez,  Depression  ,05/08/2025,  Dr. Lee  ,INS-413181,NO-SHOW
+PT00012,mary young,  Hypertension  ,2023-03-29,dr. kim,INS-870269,scheduled
+PT00013,mary wright,Hypertension,08-14-2025,  Dr. Garcia  ,INS-944886,completed
+PT00014,william lee,Back Pain,07-16-2025,Dr. Lee,INS-122982,  cancelled  
+PT00015,linda young,Arthritis,2024-07-27,Dr. Chen,INS-726440,CANCELLED
+PT00016,linda robinson,MIGRAINE,03-09-2025,dr. garcia,,cancelled
+PT00017,jessica martinez,  Diabetes  ,29-04-2024,  Dr. Lee  ,INS-805760,  no-show  
+PT00018,robert hall,  Migraine  ,2024-01-17,dr. kim,INS-363472,SCHEDULED
+PT00019,SUSAN ALLEN,  Migraine  ,2025-02-14,Dr. Lee,INS-415490,completed
+PT00020,LINDA YOUNG,Arthritis,2023-08-18,dr. kim,INS-866825,  no-show  
+PT00021,  Jennifer Lewis  ,  Hypertension  ,2025-02-06,DR. LEE,INS-606014,completed
+PT00022,JOHN WRIGHT,  Depression  ,2024-12-24,Dr. Smith,INS-428607,NO-SHOW
+PT00023,  Mary Hall  ,depression,07/23/2024,dr. chen,INS-554593,  no-show  
+PT00024,Linda Allen,Anxiety,2025-12-02,Dr. Smith,INS-676749,cancelled
+PT00024,linda allen,anxiety,12-02-2025,Dr. Smith,INS-676749,
+PT00025,Jennifer Lewis,migraine,2024-01-05,DR. LEE,INS-128350,no-show
+PT00026,richard wright,Arthritis,2025-10-11,dr. chen,,NO-SHOW
+PT00027,David Lewis,hypertension,2024-11-18,Dr. Chen,,
+PT00028,Jessica King,ARTHRITIS,14-03-2025,dr. lee,INS-828514,  scheduled  
+PT00029,john robinson,HYPERTENSION,04/11/2023,Dr. Davis,INS-555085,CANCELLED
+PT00030,  Richard Wright  ,ANXIETY,01-22-2025,Dr. Kim,INS-602889,SCHEDULED
+PT00031,barbara martinez,DIABETES,2024-11-03,dr. kim,INS-355307,scheduled
+PT00032,JOSEPH ROBINSON,  Arthritis  ,2023-05-01,Dr. Chen,INS-462131,  completed  
+PT00033,david martinez,ANXIETY,01-10-2025,Dr. Patel,INS-320256,scheduled
+PT00034,LINDA WALKER,  Asthma  ,14-09-2024,DR. BROWN,INS-536029,scheduled
+PT00035,  Richard King  ,hypertension,11-12-2023,Dr. Patel,INS-374114,completed
+PT00036,JOSEPH ROBINSON,Back Pain,2023-04-19,Dr. Chen,INS-456266,  no-show  
+PT00037,  Patricia Martinez  ,diabetes,2024-03-29,dr. lee,INS-976736,COMPLETED
+PT00038,JOSEPH ALLEN,  Diabetes  ,10/10/2023,Dr. Kim,,  no-show  
+PT00039,DAVID LEWIS,Arthritis,2025-11-05,  Dr. Brown  ,INS-135923,COMPLETED
+PT00040,JAMES WRIGHT,hypertension,2025-05-08,  Dr. Patel  ,INS-658185,COMPLETED
+PT00041,Elizabeth Hall,  Anxiety  ,12/29/2023,  Dr. Chen  ,INS-983773,CANCELLED
+PT00042,  James Wright  ,Back Pain,2023-06-13,  Dr. Brown  ,INS-110377,cancelled
+PT00043,  Richard Robinson  ,  Diabetes  ,07/20/2024,Dr. Lee,INS-889945,NO-SHOW
+PT00044,Michael Lewis,Asthma,11-13-2023,DR. SMITH,INS-235117,no-show
+PT00045,mary robinson,BACK PAIN,2024-04-12,  Dr. Patel  ,INS-385647,scheduled
+PT00046,  John Martinez  ,depression,03-16-2025,dr. chen,INS-770880,no-show
+PT00047,James Robinson,HYPERTENSION,30-03-2024,Dr. Patel,INS-393319,completed
+PT00048,  Elizabeth Walker  ,asthma,18-07-2025,DR. SMITH,INS-504185,  cancelled  
+PT00049,linda allen,MIGRAINE,08/31/2025,Dr. Davis,INS-925903,no-show
+PT00050,susan wright,Asthma,09-10-2023,DR. DAVIS,INS-160320,  scheduled  

@@ -1,0 +1,51 @@
+employee_id,name,department,salary,hire_date,city,email
+EMP0001,Diana Smith,Finance,72098,2024-04-02,Tokyo,diana.thompson@company.com
+EMP0002,Charlie Robinson,Legal,44165,2023-03-03,London,grace.davis@company.com
+EMP0003,Quinn Clark,Engineering,113563,2024-02-12,Paris,henry.white@company.com
+EMP0004,Sam Wilson,Engineering,139458,2023-11-23,Paris,karen.wilson@company.com
+EMP0005,Eve Miller,Operations,53396,2023-07-09,Paris,diana.anderson@company.com
+EMP0006,Leo Clark,Finance,145791,2023-03-30,Mumbai,rosa.brown@company.com
+EMP0007,Mia Williams,Finance,148711,2025-01-10,Berlin,charlie.johnson@company.com
+EMP0008,Henry Moore,Marketing,70512,2023-07-26,Paris,ivy.white@company.com
+EMP0009,Leo Garcia,Operations,86566,2024-03-05,Sydney,charlie.clark@company.com
+EMP0010,Frank Thompson,HR,61417,2025-08-04,Paris,ivy.thompson@company.com
+EMP0011,Henry Taylor,Engineering,70021,2023-03-07,Toronto,mia.wilson@company.com
+EMP0012,Charlie Miller,Operations,67869,2025-10-19,Paris,olivia.jones@company.com
+EMP0013,Ivy Jones,HR,137647,2024-06-22,Paris,sam.thomas@company.com
+EMP0014,Leo Davis,Sales,106784,2025-10-07,London,bob.brown@company.com
+EMP0015,Eve Garcia,Legal,118172,2023-05-11,Paris,mia.clark@company.com
+EMP0016,Olivia Martin,Finance,112512,2023-01-24,London,rosa.wilson@company.com
+EMP0017,Karen Brown,Finance,96985,2023-11-20,Mumbai,alice.wilson@company.com
+EMP0018,Quinn Garcia,Marketing,121959,2024-09-03,Berlin,eve.anderson@company.com
+EMP0019,Frank Thompson,Engineering,118504,2024-10-25,Mumbai,alice.brown@company.com
+EMP0020,Leo Moore,HR,47592,2024-05-08,London,charlie.harris@company.com
+EMP0021,Charlie Thompson,Sales,56828,2025-08-31,Tokyo,ivy.martin@company.com
+EMP0022,Tina Jackson,HR,110686,2024-02-16,Sydney,mia.anderson@company.com
+EMP0023,Olivia Martin,IT,55860,2024-05-22,Berlin,charlie.taylor@company.com
+EMP0024,Alice Robinson,HR,117128,2024-03-27,New York,charlie.johnson@company.com
+EMP0025,Henry Williams,Engineering,83309,2023-05-26,Berlin,ivy.harris@company.com
+EMP0026,Grace Thompson,Sales,134811,2025-08-26,Berlin,paul.jackson@company.com
+EMP0027,Grace Brown,Marketing,126374,2025-06-01,Toronto,noah.jackson@company.com
+EMP0028,Olivia Johnson,Marketing,47944,2025-04-04,Toronto,diana.davis@company.com
+EMP0029,Grace Miller,IT,58373,2025-05-14,Tokyo,ivy.white@company.com
+EMP0030,Henry Williams,IT,145909,2023-07-20,New York,rosa.smith@company.com
+EMP0031,Charlie Davis,Sales,93269,2025-09-21,Mumbai,grace.thomas@company.com
+EMP0032,Bob Garcia,Legal,40282,2025-03-10,Sydney,olivia.moore@company.com
+EMP0033,Noah Thompson,IT,60289,2024-01-24,Sydney,grace.johnson@company.com
+EMP0034,Sam Thompson,Engineering,138038,2024-10-04,New York,bob.robinson@company.com
+EMP0035,Paul Martin,Sales,47455,2025-11-06,London,frank.williams@company.com
+EMP0036,Tina Williams,HR,92923,2023-09-03,Berlin,sam.clark@company.com
+EMP0037,Bob Clark,Marketing,94948,2025-12-06,Toronto,ivy.miller@company.com
+EMP0038,Karen Davis,Finance,91876,2023-09-26,Sydney,olivia.taylor@company.com
+EMP0039,Charlie Smith,IT,121416,2023-07-24,London,rosa.miller@company.com
+EMP0040,Quinn Wilson,Sales,85745,2023-05-21,Berlin,leo.moore@company.com
+EMP0041,Frank White,Finance,120173,2025-12-19,New York,rosa.moore@company.com
+EMP0042,Diana Jones,Finance,55129,2023-08-08,Tokyo,ivy.moore@company.com
+EMP0043,Tina Miller,Operations,66685,2024-06-24,Mumbai,ivy.johnson@company.com
+EMP0044,Charlie Jackson,Finance,45778,2023-01-08,Toronto,eve.wilson@company.com
+EMP0045,Frank White,Legal,113519,2023-01-20,London,charlie.jones@company.com
+EMP0046,Rosa Johnson,Operations,116350,2023-10-31,Paris,eve.johnson@company.com
+EMP0047,Jack Anderson,Engineering,86898,2024-03-06,Berlin,diana.anderson@company.com
+EMP0048,Rosa Jackson,Sales,71029,2023-11-29,Tokyo,noah.smith@company.com
+EMP0049,Frank Taylor,Legal,145150,2024-05-23,Sydney,frank.brown@company.com
+EMP0050,Mia Johnson,IT,69154,2024-02-13,Mumbai,leo.moore@company.com
