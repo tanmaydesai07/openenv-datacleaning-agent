@@ -1,0 +1,12 @@
+# Core dependencies for inference
+openai>=1.0.0
+pandas>=2.0.0
+numpy>=1.24.0
+requests>=2.31.0
+
+# Environment dependencies (install with: pip install -e data_clean_env/)
+# openenv-core[core]>=0.2.2
+# fastapi>=0.115.0
+# fastmcp>=2.0.0
+# pydantic>=2.0.0
+# uvicorn>=0.24.0
