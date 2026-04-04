@@ -23,12 +23,12 @@ from __future__ import annotations
 import asyncio
 import json
 import os
-import sys
+import time
 import uuid
 from pathlib import Path
 from typing import Any, Dict, List
-
-from openai import OpenAI
+import sys
+from openai import OpenAI, RateLimitError
 
 # Add data_clean_env to path
 sys.path.insert(0, str(Path(__file__).parent))
@@ -58,29 +58,21 @@ MAX_EPISODES = 3
 MAX_TOKENS = 4096
 VERBOSE = True
 
-SYSTEM_PROMPT = """You are a data cleaning expert assistant.
+SYSTEM_PROMPT = """You are a data cleaning expert. You MUST follow this exact workflow:
 
-Your task is to identify and fix data quality issues in CSV files. Think step by step:
+STEP 1: Read the messy CSV file using read_file(path)
+STEP 2: Run a Python cleaning script using run_python(code) that:
+  - Reads the CSV with pandas
+  - Fixes all identified issues
+  - Saves the result using df.to_csv('cleaned_output.csv', index=False)
+STEP 3: Submit IMMEDIATELY using submit_cleaned_file(path='cleaned_output.csv')
 
-1. First, read the messy input file to understand the data structure
-2. Analyze the data to identify issues (duplicates, missing values, formatting problems, etc.)
-3. Use Python code to clean the data systematically
-4. Write the cleaned data to a new file
-5. Submit the cleaned file for grading
-
-Available tools:
-- read_file(path): Read a file from the workspace
-- run_python(code): Execute Python code to analyze/clean data (pandas, numpy available)
-- write_file(path, content): Write cleaned data to a file
-- submit_cleaned_file(path): Submit your cleaned file (terminates episode)
-
-Best practices:
-- Use pandas for data manipulation
-- Handle missing values appropriately (remove or fill with sensible defaults)
-- Remove duplicate rows
-- Standardize formatting (dates, casing, whitespace)
-- Validate data types and fix invalid values
-- Be thorough but efficient
+CRITICAL RULES:
+- After run_python saves the file with df.to_csv(), you MUST submit immediately
+- Do NOT use write_file — it is too slow for large files
+- Do NOT run extra verification steps after saving
+- Do NOT run more than 2 Python commands total
+- The file path MUST be exactly 'cleaned_output.csv'
 """
 
 
@@ -90,13 +82,15 @@ def _tools_to_openai_format(tools) -> List[dict]:
     for tool in tools:
         properties = {}
         required = []
-        if tool.inputSchema and "properties" in tool.inputSchema:
-            for name, schema in tool.inputSchema["properties"].items():
+        # Use input_schema (snake_case) - the attribute name in openenv Tool class
+        schema = tool.input_schema
+        if schema and "properties" in schema:
+            for name, prop_schema in schema["properties"].items():
                 properties[name] = {
-                    "type": schema.get("type", "string"),
-                    "description": schema.get("description", ""),
+                    "type": prop_schema.get("type", "string"),
+                    "description": prop_schema.get("description", ""),
                 }
-            required = tool.inputSchema.get("required", [])
+            required = schema.get("required", [])
 
         openai_tools.append(
             {
@@ -129,14 +123,23 @@ async def play_episode(
     """Play a single data cleaning episode."""
     tool_names = [t["function"]["name"] for t in tools]
 
-    obs = await env.reset()
+    result = await env.reset()
+
+    # Get task info from state (metadata is excluded from serialization)
+    state = await env.state()
     task_id = str(uuid.uuid4())[:8]
-    task_level = obs.metadata.get("task_level", "unknown")
-    task_description = obs.metadata.get("task_description", "")
-    messy_file = obs.metadata.get("messy_file", "")
+
+    # State contains task info that we need
+    task_level = getattr(state, "task_level", "unknown") or "unknown"
+    task_description = getattr(state, "task_description", "") or ""
+    messy_file_path = getattr(state, "messy_file_path", "") or ""
+    # Extract just the filename from the full path
+    messy_file = os.path.basename(messy_file_path) if messy_file_path else ""
 
     # [START] log - required hackathon format
-    print(f"[START] task_id={task_id}, episode={episode_num}, level={task_level}, messy_file={messy_file}")
+    print(
+        f"[START] task_id={task_id}, episode={episode_num}, level={task_level}, messy_file={messy_file}"
+    )
 
     if VERBOSE:
         print(f"\n{'=' * 60}")
@@ -155,56 +158,83 @@ async def play_episode(
     ]
     step_count = 0
 
-    while not obs.done:
+    while not result.done:
         step_count += 1
         if VERBOSE:
             print(f"\n--- Step {step_count} ---")
 
-        response = client.chat.completions.create(
-            model=MODEL_NAME,
-            messages=chat_history,
-            tools=tools,
-            tool_choice="required",
-            max_completion_tokens=MAX_TOKENS,
-        )
+        # Retry loop for rate limits
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                response = client.chat.completions.create(
+                    model=MODEL_NAME,
+                    messages=chat_history,
+                    tools=tools,
+                    tool_choice="auto",
+                    max_completion_tokens=MAX_TOKENS,
+                )
+                break
+            except RateLimitError as e:
+                wait_time = 30 * (attempt + 1)
+                print(
+                    f"[WARN] Rate limit hit, waiting {wait_time}s... (attempt {attempt + 1}/{max_retries})"
+                )
+                time.sleep(wait_time)
+                if attempt == max_retries - 1:
+                    print(
+                        f"[ERROR] Rate limit exceeded after {max_retries} retries. Submitting best effort."
+                    )
+                    # Force submit
+                    tool_name = "submit_cleaned_file"
+                    tool_args = {"path": "cleaned_output.csv"}
+                    tool_call_id = "none"
+                    response = None
+                    break
 
-        message = response.choices[0].message
-
-        if not message.tool_calls:
-            # Fallback if no tool call
-            tool_name = "submit_cleaned_file"
-            tool_args = {"path": "cleaned.csv"}
-            tool_call_id = "none"
+        # If rate limit exhausted, skip to action execution with forced submit
+        if response is None:
+            pass  # tool_name, tool_args, tool_call_id already set above
         else:
-            tool_call_obj = message.tool_calls[0]
-            tool_name = tool_call_obj.function.name
-            tool_args = json.loads(tool_call_obj.function.arguments)
-            tool_call_id = tool_call_obj.id
+            message = response.choices[0].message
 
-        chat_history.append(
-            {
-                "role": "assistant",
-                "content": None,
-                "tool_calls": [
-                    {
-                        "id": tool_call_id,
-                        "type": "function",
-                        "function": {
-                            "name": tool_name,
-                            "arguments": json.dumps(tool_args)
-                            if tool_call_id == "none"
-                            else tool_call_obj.function.arguments,
-                        },
-                    }
-                ],
-            }
-        )
+            if not message.tool_calls:
+                # Fallback if no tool call
+                tool_name = "submit_cleaned_file"
+                tool_args = {"path": "cleaned.csv"}
+                tool_call_id = "none"
+            else:
+                tool_call_obj = message.tool_calls[0]
+                tool_name = tool_call_obj.function.name
+                tool_args = json.loads(tool_call_obj.function.arguments)
+                tool_call_id = tool_call_obj.id
+
+            chat_history.append(
+                {
+                    "role": "assistant",
+                    "content": None,
+                    "tool_calls": [
+                        {
+                            "id": tool_call_id,
+                            "type": "function",
+                            "function": {
+                                "name": tool_name,
+                                "arguments": json.dumps(tool_args)
+                                if tool_call_id == "none"
+                                else tool_call_obj.function.arguments,
+                            },
+                        }
+                    ],
+                }
+            )
 
         # [STEP] log - required hackathon format
         args_str_log = json.dumps(tool_args)
         if len(args_str_log) > 200:
             args_str_log = args_str_log[:200] + "..."
-        print(f"[STEP] task_id={task_id}, step={step_count}, tool={tool_name}, args={args_str_log}")
+        print(
+            f"[STEP] task_id={task_id}, step={step_count}, tool={tool_name}, args={args_str_log}"
+        )
 
         if VERBOSE:
             args_str = json.dumps(tool_args)
@@ -220,9 +250,11 @@ async def play_episode(
         action = CallToolAction(tool_name=tool_name, arguments=tool_args)
         step_result = await env.step(action)
         obs = step_result.observation
-        result_text = obs.result if hasattr(obs, "result") else str(obs.metadata)
+        result_text = (
+            obs.result if hasattr(obs, "result") else str(getattr(obs, "metadata", {}))
+        )
 
-        if not obs.done:
+        if not step_result.done:
             chat_history.append(
                 {
                     "role": "tool",
@@ -235,10 +267,15 @@ async def play_episode(
             result_preview = str(result_text)[:300]
             print(f"Result: {result_preview}...")
 
-    reward = obs.reward or 0.0
+        # Update result for while loop condition
+        result = step_result
+
+    reward = result.reward or 0.0
 
     # [END] log - required hackathon format
-    print(f"[END] task_id={task_id}, episode={episode_num}, level={task_level}, reward={reward:.4f}, steps={step_count}")
+    print(
+        f"[END] task_id={task_id}, episode={episode_num}, level={task_level}, reward={reward:.4f}, steps={step_count}"
+    )
 
     if VERBOSE:
         outcome = "SUCCESS" if reward > 0.7 else "PARTIAL" if reward > 0.3 else "FAILED"
