@@ -250,7 +250,9 @@ class DataCleanEnvironment(MCPEnvironment):
 
         # Only add domain tasks if the files exist
         for task in domain_tasks:
-            if os.path.exists(task["messy_file"]) and os.path.exists(task["clean_file"]):
+            if os.path.exists(task["messy_file"]) and os.path.exists(
+                task["clean_file"]
+            ):
                 configs.append(task)
 
         return configs
@@ -467,5 +469,5 @@ class DataCleanEnvironment(MCPEnvironment):
         if self._workspace_dir and os.path.exists(self._workspace_dir):
             try:
                 shutil.rmtree(self._workspace_dir)
-            except:
+            except Exception:
                 pass
