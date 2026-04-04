@@ -1,0 +1,51 @@
+product_id,name,category,price,quantity,last_updated,supplier
+P001,Laptop Computer,Electronics,999.99,50,2024-01-15,TechCorp
+P002,Wireless Mouse,Electronics,25.50,0,2024-01-16,AccessoryCo
+P003,Desktop PC,Electronics,1499.99,30,2024-01-17,TechCorp
+P004,USB Cable (5ft),Accessories,9.99,200,2024-01-01,CableCo
+P005,Mechanical Keyboard,Electronics,75.00,100,2024-01-19,AccessoryCo
+P006,Monitor 27",Electronics,0.00,25,2024-01-20,DisplayTech
+P007,HDMI Cable,Accessories,12.50,150,2024-01-21,CableCo
+P008,Webcam HD,Electronics,65.00,0,2024-01-22,TechCorp
+P009,External HDD 1TB,Storage,85.99,75,2024-01-23,StoragePro
+P010,SSD 500GB,Storage,120.00,0,2024-01-24,StoragePro
+P011,Gaming Mouse,Accessories,55.50,60,2024-01-25,AccessoryCo
+P012,Laptop Bag,Accessories,29.99,100,2024-01-26,BagCo
+P013,USB Hub 4-Port,Electronics,0.00,80,2024-01-27,TechCorp
+P014,Ethernet Cable 10ft,Accessories,15.75,0,2024-01-28,CableCo
+P015,Wireless Headset,Electronics,89.99,45,2024-01-29,AudioTech
+P016,Laptop Stand,Accessories,35.00,55,2024-01-30,AccessoryCo
+P017,Portable Charger,Electronics,0.00,90,2024-01-31,TechCorp
+P018,Tablet 10",Electronics,299.99,0,2024-01-01,TabletCo
+P019,Stylus Pen,Accessories,19.99,0,2024-02-01,AccessoryCo
+P020,Screen Protector,Accessories,9.50,250,2024-02-02,ProtectCo
+P021,Phone Case,Accessories,14.99,180,2024-02-03,CaseCo
+P022,Wireless Charger,Electronics,32.50,70,2024-02-01,TechCorp
+P023,Bluetooth Speaker,Electronics,0.00,40,2024-02-05,AudioTech
+P024,Smartwatch,Electronics,199.99,0,2024-02-06,WatchCo
+P025,Fitness Tracker,Electronics,79.99,65,2024-02-07,WatchCo
+P026,VR Headset,Electronics,350.00,0,2024-02-08,VRTech
+P027,Gaming Controller,Accessories,45.50,95,2024-02-01,GameCo
+P028,Microphone USB,Electronics,68.00,0,2024-02-10,AudioTech
+P029,Ring Light,Electronics,42.99,110,2024-02-11,PhotoCo
+P030,Tripod Stand,Accessories,0.00,85,2024-02-12,PhotoCo
+P031,Memory Card 64GB,Storage,22.50,140,2024-02-13,StoragePro
+P032,Card Reader,Storage,18.99,160,2024-02-14,StoragePro
+P033,Power Bank 20000mAh,Electronics,48.75,0,2024-02-15,TechCorp
+P034,Car Charger,Accessories,0.00,120,2024-02-16,ChargeCo
+P035,Wall Adapter,Electronics,16.50,95,2024-02-17,ChargeCo
+P036,Extension Cord,Accessories,21.99,0,2024-02-18,CableCo
+P037,Surge Protector,Electronics,35.00,75,2024-02-19,CableCo
+P038,Desk Lamp,Electronics,52.50,0,2024-02-20,LightCo
+P039,Monitor Arm,Accessories,89.99,50,2024-02-21,DisplayTech
+P040,Cable Organizer,Accessories,0.00,200,2024-02-01,AccessoryCo
+P041,Webcam Cover,Accessories,5.99,300,2024-02-23,PrivacyCo
+P042,Laptop Cooler,Electronics,38.50,60,2024-02-24,CoolingCo
+P043,Palm Rest,Accessories,24.99,0,2024-02-25,AccessoryCo
+P044,Keyboard Wrist Rest,Accessories,22.50,85,2024-02-26,AccessoryCo
+P045,Mouse Pad XL,Electronics,0.00,110,2024-02-27,AccessoryCo
+P046,USB-C Adapter,Accessories,13.75,0,2024-02-28,AdapterCo
+P047,Display Port Cable,Electronics,17.99,90,2024-02-01,CableCo
+P048,Audio Splitter,Accessories,8.50,0,2024-03-02,AudioTech
+P049,Cable Sleeve,Accessories,11.99,175,2024-03-03,CableCo
+P050,Zip Ties Pack,Accessories,0.00,220,2024-03-01,OrganizerCo

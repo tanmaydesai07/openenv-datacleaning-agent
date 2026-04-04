@@ -1,0 +1,21 @@
+order_id,customer_name,order_date,amount,email
+1001,  JOHN DOE  ,2024-01-15,  100.50  ,john@example.com
+1002,jane smith,01/16/2024,$150.75,JANE@EXAMPLE.COM
+1003,Bob Johnson  ,2024-01-17,200,bob@example
+1004,ALICE BROWN,1/18/24,  $250.00  ,alice@example.com
+1005,charlie davis,2024-01-19,  invalid  ,charlie@example.com
+1006,  Eve Wilson  ,01-20-2024,300.25,eve@example.com
+1007,Frank Miller,2024/01/21,$175.50,frank@example.com
+1008,grace lee,22-01-2024,  225  ,GRACE@EXAMPLE.COM
+1009,  HENRY CLARK  ,2024-01-23,  $180.75  ,henry@example
+1010,Ivy Taylor,01/24/2024,190.00,ivy@example.com
+1011,jack white,2024-01-25,  invalid  ,jack@example.com
+1012,  Karen Green  ,1/26/24,$210.50,KAREN@EXAMPLE.COM
+1013,LEO HARRIS,2024-01-27,  230  ,leo@example.com
+1014,mia martin,01-28-2024,  $195.25  ,mia@example
+1015,  NOAH LOPEZ  ,2024/01/29,240.00,noah@example.com
+1016,olivia gonzalez,30-01-2024,$205.75,OLIVIA@EXAMPLE.COM
+1017,  Paul Anderson  ,2024-01-31,  215  ,paul@example.com
+1018,QUINN THOMAS,01/01/2024,  invalid  ,quinn@example
+1019,ruby jackson,2024-02-01,$220.50,ruby@example.com
+1020,  sam white  ,2/2/24,  235  ,SAM@EXAMPLE.COM

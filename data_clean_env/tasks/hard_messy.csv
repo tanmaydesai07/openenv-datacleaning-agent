@@ -1,0 +1,51 @@
+product_id,name,category,price,quantity,last_updated,supplier
+P001,Laptop Computer,Electronics,$999.99,50,2024-01-15,TechCorp
+P002,  wireless mouse  ,electronics,  $25.50  ,-5,01/16/2024,  AccessoryCo  
+,Desktop PC,Electronics,1499.99,30,2024-01-17,TechCorp
+P004,USB Cable (5ft),Accessories,$9.99,200,invalid,CableCo
+P005,MECHANICAL KEYBOARD,electronics,  $75.00  ,100,2024-01-19,AccessoryCo
+P006,Monitor 27",Electronics,  invalid  ,25,01-20-2024,DisplayTech
+P007,  hdmi cable  ,Accessories,12.50 USD,150,2024/01/21,  CableCo  
+P008,Webcam HD,electronics,  $65.00  ,-2,22-01-2024,TechCorp
+P009,External HDD 1TB,Storage,$85.99,75,2024-01-23,StoragePro
+P010,  SSD 500GB  ,storage,  120.00  ,,01/24/2024,  StoragePro  
+P011,Gaming Mouse,Accessories,  $55.50  ,60,2024-01-25,AccessoryCo
+,Laptop Bag,Accessories,29.99,100,1/26/24,BagCo
+P013,USB Hub 4-Port,electronics,  invalid  ,80,2024-01-27,TechCorp
+P014,  ethernet cable 10ft  ,Accessories,  $15.75  ,-10,01-28-2024,  CableCo  
+P015,WIRELESS HEADSET,Electronics,89.99 USD,45,2024/01/29,AudioTech
+P016,Laptop Stand,accessories,  $35.00  ,55,30-01-2024,AccessoryCo
+P017,  portable charger  ,Electronics,  invalid  ,90,2024-01-31,  TechCorp  
+P018,Tablet 10",electronics,$299.99,,01/01/2024,TabletCo
+P019,Stylus Pen,Accessories,  $19.99  ,-3,2024-02-01,AccessoryCo
+P020,  SCREEN PROTECTOR  ,accessories,  9.50  ,250,2/2/24,  ProtectCo  
+P021,Phone Case,Accessories,$14.99,180,2024-02-03,CaseCo
+P022,wireless charger,Electronics,  $32.50  ,70,invalid,TechCorp
+P023,  Bluetooth Speaker  ,electronics,  invalid  ,40,02-05-2024,  AudioTech  
+,Smartwatch,Electronics,199.99,-8,2024/02/06,WatchCo
+P025,FITNESS TRACKER,Electronics,  $79.99  ,65,07-02-2024,WatchCo
+P026,  vr headset  ,electronics,  350.00 USD  ,,2024-02-08,  VRTech  
+P027,Gaming Controller,Accessories,$45.50,95,invalid,GameCo
+P028,  MICROPHONE USB  ,Electronics,  $68.00  ,-15,2/10/24,  AudioTech  
+P029,Ring Light,electronics,42.99,110,2024-02-11,PhotoCo
+P030,Tripod Stand,Accessories,  invalid  ,85,02-12-2024,PhotoCo
+P031,  memory card 64gb  ,Storage,  $22.50  ,140,2024/02/13,  StoragePro  
+P032,CARD READER,storage,18.99 USD,160,14-02-2024,StoragePro
+,Power Bank 20000mAh,Electronics,  $48.75  ,-5,2024-02-15,TechCorp
+P034,  car charger  ,Accessories,  invalid  ,120,2/16/24,  ChargeCo  
+P035,WALL ADAPTER,electronics,16.50,95,2024-02-17,ChargeCo
+P036,  extension cord  ,Accessories,  $21.99  ,,02-18-2024,  CableCo  
+P037,Surge Protector,Electronics,35.00 USD,75,2024/02/19,CableCo
+P038,  DESK LAMP  ,electronics,  $52.50  ,-20,20-02-2024,  LightCo  
+P039,Monitor Arm,Accessories,89.99,50,2024-02-21,DisplayTech
+P040,cable organizer,accessories,  invalid  ,200,invalid,  AccessoryCo  
+P041,  WEBCAM COVER  ,Accessories,  $5.99  ,300,2/23/24,  PrivacyCo  
+P042,Laptop Cooler,Electronics,38.50,60,2024-02-24,CoolingCo
+P043,  palm rest  ,accessories,  24.99 USD  ,-7,02-25-2024,  AccessoryCo  
+,Keyboard Wrist Rest,Accessories,$22.50,85,2024/02/26,AccessoryCo
+P045,MOUSE PAD XL,electronics,  invalid  ,110,27-02-2024,AccessoryCo
+P046,  usb-c adapter  ,Accessories,  $13.75  ,,2024-02-28,  AdapterCo  
+P047,Display Port Cable,electronics,17.99 USD,90,invalid,CableCo
+P048,  AUDIO SPLITTER  ,Accessories,  $8.50  ,-12,3/2/24,  AudioTech  
+P049,Cable Sleeve,accessories,11.99,175,2024-03-03,CableCo
+P050,  zip ties pack  ,Accessories,  invalid  ,220,invalid,  OrganizerCo  

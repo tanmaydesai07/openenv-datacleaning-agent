@@ -1,0 +1,6 @@
+customer_id,name,email,phone
+1,John Doe,john@example.com,555-1234
+2,Jane Smith,,555-5678
+1,John Doe,john@example.com,555-1234
+3,Bob Johnson,bob@example.com,
+4,Alice Brown,alice@example.com,555-9012
