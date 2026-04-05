@@ -6,6 +6,7 @@
 # STEP 2: Install training deps:
 #   pip install -r requirements-train.txt
 
+# Core ML
 transformers>=4.40.0
 trl>=0.15.0
 peft>=0.10.0
@@ -14,5 +15,17 @@ bitsandbytes>=0.43.0
 datasets>=2.18.0
 huggingface_hub>=0.20.0
 
-# Also install base requirements
--r requirements.txt
+# Data processing
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Environment server
+openenv-core[core]>=0.2.2
+fastapi>=0.115.0
+fastmcp>=2.0.0
+pydantic>=2.0.0
+uvicorn>=0.24.0
+requests>=2.31.0
+
+# Inference
+openai>=1.0.0
