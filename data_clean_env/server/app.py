@@ -53,6 +53,24 @@ app = create_app(
     env_name="data_clean_env",
 )
 
+# Explicit health/info routes for platform checks.
+@app.get("/health")
+def health():
+    return {
+        "status": "ok",
+        "env_name": "data_clean_env",
+        "tasks_path": TASKS_PATH,
+    }
+
+
+@app.get("/")
+def root():
+    return {
+        "name": "data_clean_env",
+        "status": "running",
+        "health": "/health",
+    }
+
 
 def main():
     """Entry point for running the server."""
