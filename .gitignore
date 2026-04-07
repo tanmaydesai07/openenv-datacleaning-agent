@@ -1,0 +1,32 @@
+# Local/reference code not for submission
+learn/
+
+# Python cache/build
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Training artifacts
+*.ipynb
+*.pt
+*.ckpt
+*.bin
+*.safetensors
+outputs/
+checkpoints/
+dataclean-grpo-checkpoint/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
