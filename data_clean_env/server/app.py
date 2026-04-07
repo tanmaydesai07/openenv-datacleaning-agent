@@ -25,10 +25,11 @@ from openenv.core.env_server.mcp_types import CallToolAction, CallToolObservatio
 
 from .environment import DataCleanEnvironment
 
-TASKS_PATH = os.environ.get(
-    "DATA_CLEAN_TASKS_PATH",
-    os.path.join(os.path.dirname(os.path.dirname(__file__)), "tasks")
-)
+DEFAULT_TASKS_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "tasks")
+TASKS_PATH = os.environ.get("DATA_CLEAN_TASKS_PATH", DEFAULT_TASKS_PATH)
+if not os.path.exists(TASKS_PATH):
+    # Fall back to packaged tasks if the provided env var path is invalid.
+    TASKS_PATH = DEFAULT_TASKS_PATH
 MAX_STEPS = int(os.environ.get("DATA_CLEAN_MAX_STEPS", "30"))
 
 

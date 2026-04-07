@@ -281,6 +281,11 @@ class DataCleanEnvironment(MCPEnvironment):
         Returns:
             Initial observation with the task description
         """
+        if not self.task_configs:
+            raise RuntimeError(
+                f"No task configurations available. Check DATA_CLEAN_TASKS_PATH: {self.tasks_path}"
+            )
+
         # Clean up previous workspace
         if self._workspace_dir and os.path.exists(self._workspace_dir):
             shutil.rmtree(self._workspace_dir, ignore_errors=True)
@@ -294,6 +299,10 @@ class DataCleanEnvironment(MCPEnvironment):
         # Copy messy file to workspace
         messy_filename = os.path.basename(task["messy_file"])
         workspace_messy_path = os.path.join(self._workspace_dir, messy_filename)
+        if not os.path.exists(task["messy_file"]):
+            raise FileNotFoundError(
+                f"Task file not found: {task['messy_file']} (tasks_path={self.tasks_path})"
+            )
         shutil.copy(task["messy_file"], workspace_messy_path)
 
         # Initialize tools
