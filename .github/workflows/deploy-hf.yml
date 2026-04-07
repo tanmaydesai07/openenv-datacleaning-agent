@@ -25,6 +25,25 @@ jobs:
             echo "HF_TOKEN is not set"
             exit 1
           fi
-          git remote remove hf || true
-          git remote add hf https://tanmaydesai07:${HF_TOKEN}@huggingface.co/spaces/tanmaydesai07/openenv-dataclean-agent
-          git push hf main:main --force
+          SPACE_DIR="$(mktemp -d)"
+
+          # Build a clean deployment snapshot (no git history, no reference repo, no large media)
+          rsync -a ./ "$SPACE_DIR/" \
+            --exclude '.git' \
+            --exclude '.github' \
+            --exclude 'learn' \
+            --exclude '.venv' \
+            --exclude '__pycache__' \
+            --exclude '*.pyc' \
+            --exclude '*.ipynb' \
+            --exclude '*.mov' \
+            --exclude '*.mp4'
+
+          cd "$SPACE_DIR"
+          git init
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Deploy to HF Space from ${GITHUB_SHA}"
+          git remote add hf "https://tanmaydesai07:${HF_TOKEN}@huggingface.co/spaces/tanmaydesai07/openenv-dataclean-agent"
+          git push hf HEAD:main --force
