@@ -1,0 +1,22 @@
+name: Deploy to HuggingFace Spaces
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: false
+
+      - name: Push to HuggingFace Spaces
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          git remote remove hf || true
+          git remote add hf https://tanmaydesai07:${HF_TOKEN}@huggingface.co/spaces/tanmaydesai07/openenv-dataclean-agent
+          git push hf main:main --force
