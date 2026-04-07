@@ -14,6 +14,7 @@ Usage:
 import os
 import re
 import sys
+import random
 import torch
 from pathlib import Path
 from datetime import datetime
@@ -37,23 +38,23 @@ from openenv.core.env_server.mcp_types import CallToolAction
 # CONFIGURATION - Optimized for 6GB VRAM
 # ============================================================================
 
-MODEL_ID = "Qwen/Qwen2.5-0.5B-Instruct"  # 0.5B fits in 6GB with 4-bit
+MODEL_ID = "Qwen/Qwen2.5-3B-Instruct"  # 0.5B fits in 6GB with 4-bit
 TASKS_PATH = str(Path(__file__).parent / "data_clean_env" / "tasks")
-MAX_STEPS = 10
+MAX_STEPS = 5  # Reduced from 10 to limit memory usage per episode
 
 CONFIG = {
-    "learning_rate": 2e-5,
+    "learning_rate": 5e-5,  # Increased for faster learning
     "num_train_epochs": 2,
     "per_device_train_batch_size": 1,
     "gradient_accumulation_steps": 4,
-    "max_completion_length": 512,
-    "num_generations": 2,  # Minimum for GRPO
-    "beta": 0.1,
-    "temperature": 0.9,
+    "max_completion_length": 256,
+    "num_generations": 2,
+    "beta": 0.05,  # Lower beta = more exploration
+    "temperature": 1.0,  # Higher temp = more diverse outputs
     "output_dir": "./dataclean-local-checkpoint",
     "logging_steps": 1,
     "save_steps": 25,
-    "warmup_steps": 5,
+    "warmup_steps": 3,  # Faster warmup
 }
 
 SYSTEM_PROMPT = """You are a data cleaning agent. Clean messy CSV files using these tools:
@@ -71,7 +72,7 @@ Then submit with: submit_cleaned_file(path='cleaned_output.csv')"""
 
 
 def extract_tool_call(text: str):
-    """Extract tool call from model output."""
+    """Extract tool call from model output. Returns (tool_name, args, is_valid_format)."""
     match = re.search(
         r"(read_file|run_python|write_file|submit_cleaned_file)\s*\((.*)\)",
         text,
@@ -89,8 +90,30 @@ def extract_tool_call(text: str):
             for m in re.finditer(r'(\w+)\s*=\s*["\']([^"\']*)["\']', args_str):
                 args[m.group(1)] = m.group(2)
         if args:
-            return tool_name, args
-    return None, None
+            return tool_name, args, True  # Valid tool call
+    return None, None, False  # Invalid format
+
+
+def compute_format_bonus(text: str) -> float:
+    """Compute bonus reward for proper formatting (creates variance for GRPO)."""
+    bonus = 0.0
+    
+    # Bonus for containing any tool call pattern
+    if re.search(r"(read_file|run_python|submit_cleaned_file)\s*\(", text):
+        bonus += 0.05
+    
+    # Bonus for proper argument format
+    if re.search(r'\w+\s*=\s*["\']', text):
+        bonus += 0.03
+    
+    # Bonus for pandas keywords (shows understanding)
+    pandas_keywords = ["pd.read_csv", "to_csv", "drop_duplicates", "dropna", "fillna", "strip"]
+    for kw in pandas_keywords:
+        if kw in text:
+            bonus += 0.02
+    
+    # Cap the bonus
+    return min(bonus, 0.15)
 
 
 # ============================================================================
@@ -115,7 +138,7 @@ def generate_with_logprobs(
             output_scores=True,
         )
 
-    generated_ids = outputs.sequences[0][prompt_len:]
+    generated_ids = outputs.sequences[0][prompt_len:].cpu()
     scores = outputs.scores
 
     logprobs = []
@@ -124,15 +147,22 @@ def generate_with_logprobs(
         token_id = generated_ids[i].item()
         logprob = torch.log(probs[token_id]).item()
         logprobs.append(logprob)
+        del probs  # Free memory immediately
 
     completion_text = tokenizer.decode(generated_ids, skip_special_tokens=True)
 
-    return {
-        "prompt_ids": inputs["input_ids"][0].tolist(),
+    # Clean up
+    result = {
+        "prompt_ids": inputs["input_ids"][0].cpu().tolist(),
         "completion_ids": generated_ids.tolist(),
         "logprobs": logprobs,
         "text": completion_text,
     }
+    
+    del inputs, outputs, generated_ids, scores
+    torch.cuda.empty_cache()
+    
+    return result
 
 
 # ============================================================================
@@ -149,10 +179,19 @@ def run_single_episode(env, model, tokenizer):
     prompt_ids_list = []
     completion_ids_list = []
     logprobs_list = []
+    
+    # Track if model has actually done cleaning work
+    has_read_file = False
+    has_run_python = False
+    
+    # Track format bonuses and penalties for learning signal
+    format_bonus = 0.0
+    fallback_penalty = 0.0
+    valid_tool_calls = 0
 
     messages = [
-        {"role": "system", "content": "You are a data cleaning agent."},
-        {"role": "user", "content": f"Task: Clean this file: {messy_file}"},
+        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "user", "content": f"Task: Clean this file: {messy_file}\n\nFirst read the file, then use run_python to clean it with pandas, save to 'cleaned_output.csv', and submit."},
     ]
 
     for step in range(MAX_STEPS):
@@ -170,17 +209,46 @@ def run_single_episode(env, model, tokenizer):
         logprobs_list.extend(rollout["logprobs"])
 
         completion_text = rollout["text"]
-        tool_name, tool_args = extract_tool_call(completion_text)
+        tool_name, tool_args, is_valid = extract_tool_call(completion_text)
+        
+        # Track format quality for reward shaping
+        format_bonus += compute_format_bonus(completion_text)
+        
+        if is_valid:
+            valid_tool_calls += 1
 
+        # Fallback logic with scaffolding to ensure learning signal
+        used_fallback = False
         if tool_name is None:
-            if step >= 2:
-                tool_name = "submit_cleaned_file"
-                tool_args = {"path": "cleaned_output.csv"}
-            else:
+            used_fallback = True
+            fallback_penalty += 0.10  # INCREASED: Strong penalty for fallback
+            if not has_read_file:
                 tool_name = "read_file"
                 tool_args = {"path": messy_file}
+            elif not has_run_python:
+                tool_name = "run_python"
+                tool_args = {"code": f"""
+import pandas as pd
+df = pd.read_csv('{messy_file}')
+df = df.drop_duplicates()
+for col in df.select_dtypes(include=['object']).columns:
+    df[col] = df[col].str.strip()
+df = df.dropna(how='all')
+df.to_csv('cleaned_output.csv', index=False)
+print('Saved cleaned_output.csv')
+"""}
+            else:
+                tool_name = "submit_cleaned_file"
+                tool_args = {"path": "cleaned_output.csv"}
+        
+        # Track what actions have been taken
+        if tool_name == "read_file":
+            has_read_file = True
+        elif tool_name == "run_python":
+            has_run_python = True
 
-        print(f"    Step {step + 1}: {tool_name}")
+        fallback_marker = " (fallback)" if used_fallback else ""
+        print(f"    Step {step + 1}: {tool_name}{fallback_marker}")
 
         action = CallToolAction(tool_name=tool_name, arguments=tool_args)
         obs = env.step(action)
@@ -197,15 +265,24 @@ def run_single_episode(env, model, tokenizer):
                 {"role": "user", "content": f"Result: {tool_result}. Continue."}
             )
 
-    final_reward = float(obs.reward or 0.0)
-    print(f"    → Reward: {final_reward:.2f}")
+    # Compute final shaped reward with noise for variance
+    base_reward = float(obs.reward or 0.0)
+    
+    # Add small random noise to create variance between episodes (critical for GRPO)
+    noise = random.uniform(-0.05, 0.05)
+    
+    shaped_reward = base_reward + format_bonus - fallback_penalty + noise
+    shaped_reward = max(0.0, min(1.0, shaped_reward))  # Clamp to [0, 1]
+    
+    print(f"    → Reward: {shaped_reward:.2f} (base={base_reward:.2f}, format=+{format_bonus:.2f}, fallback=-{fallback_penalty:.2f})")
 
     return {
         "prompt_ids": prompt_ids_list,
         "completion_ids": completion_ids_list,
         "logprobs": logprobs_list,
-        "final_reward": final_reward,
+        "final_reward": shaped_reward,
         "task_level": task_level,
+        "valid_tool_calls": valid_tool_calls,
     }
 
 
@@ -224,15 +301,20 @@ def rollout_func(prompts: List[str], trainer) -> Dict[str, List]:
     episode_logprobs = []
     final_rewards = []
 
-    for i, prompt_text in enumerate(prompts):
-        print(f"  Episode {i + 1}/{len(prompts)}")
-        env = DataCleanEnvironment(tasks_path=TASKS_PATH, max_steps=MAX_STEPS)
-        episode = run_single_episode(env, model, tokenizer)
-        episode_prompt_ids.append(episode["prompt_ids"])
-        episode_completion_ids.append(episode["completion_ids"])
-        episode_logprobs.append(episode["logprobs"])
-        final_rewards.append(episode["final_reward"])
-        del env
+    # Force no gradient computation during rollout
+    with torch.no_grad():
+        for i, prompt_text in enumerate(prompts):
+            print(f"  Episode {i + 1}/{len(prompts)}")
+            env = DataCleanEnvironment(tasks_path=TASKS_PATH, max_steps=MAX_STEPS)
+            episode = run_single_episode(env, model, tokenizer)
+            episode_prompt_ids.append(episode["prompt_ids"])
+            episode_completion_ids.append(episode["completion_ids"])
+            episode_logprobs.append(episode["logprobs"])
+            final_rewards.append(episode["final_reward"])
+            del env, episode
+            
+            # Clear GPU cache after each episode
+            torch.cuda.empty_cache()
 
     return {
         "prompt_ids": episode_prompt_ids,
@@ -301,14 +383,14 @@ def main():
     bnb_config = BitsAndBytesConfig(
         load_in_4bit=True,
         bnb_4bit_quant_type="nf4",
-        bnb_4bit_compute_dtype=torch.float16,
+        bnb_4bit_compute_dtype=torch.bfloat16,  # Use bfloat16 for better stability
         bnb_4bit_use_double_quant=True,
     )
 
     model = AutoModelForCausalLM.from_pretrained(
         MODEL_ID,
         quantization_config=bnb_config,
-        torch_dtype=torch.float16,
+        torch_dtype=torch.bfloat16,  # Match compute dtype
         device_map={"": 0},  # Force single GPU
         trust_remote_code=True,
         attn_implementation="eager",
@@ -317,12 +399,12 @@ def main():
     print(f"✅ Model loaded: {model.num_parameters() / 1e9:.2f}B parameters")
     print(f"   GPU Memory: {torch.cuda.memory_allocated() / 1e9:.2f} GB")
 
-    # LoRA config
+    # LoRA config - increased rank for more learning capacity
     lora_config = LoraConfig(
-        r=8,
-        lora_alpha=16,
+        r=16,  # Increased from 8
+        lora_alpha=32,  # Increased proportionally
         lora_dropout=0.05,
-        target_modules=["q_proj", "v_proj"],
+        target_modules=["q_proj", "k_proj", "v_proj", "o_proj"],  # More layers
         task_type="CAUSAL_LM",
     )
 
@@ -336,14 +418,16 @@ def main():
         num_generations=CONFIG["num_generations"],
         max_completion_length=CONFIG["max_completion_length"],
         temperature=CONFIG["temperature"],
+        beta=CONFIG["beta"],  # KL penalty coefficient
         logging_steps=CONFIG["logging_steps"],
         save_steps=CONFIG["save_steps"],
         save_total_limit=2,
         report_to="none",
-        bf16=False,
-        fp16=True,
-        gradient_checkpointing=False,
-        warmup_steps=CONFIG["warmup_steps"],
+        bf16=True,
+        fp16=False,
+        gradient_checkpointing=True,
+        warmup_steps=0,  # No warmup - start learning immediately
+        lr_scheduler_type="constant",  # Keep LR constant, don't decay to 0
     )
 
     # Create trainer
