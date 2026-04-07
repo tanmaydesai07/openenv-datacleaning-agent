@@ -1,3 +1,13 @@
+---
+title: OpenEnv DataClean Agent
+emoji: "🧹"
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+app_file: app.py
+pinned: false
+---
+
 # DataCleanEnv — Meta OpenEnv Hackathon 2026
 
 ## What This Agent Does
