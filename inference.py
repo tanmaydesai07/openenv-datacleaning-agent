@@ -8,8 +8,8 @@ Data Cleaning environment and using tool calls to clean messy CSV files.
 Environment Variables:
     API_BASE_URL: Base URL for the OpenAI-compatible API
     MODEL_NAME: Name of the model to use
-    HF_TOKEN: HuggingFace API token (alternative to API_KEY)
-    API_KEY: API key for the model service
+    HF_TOKEN: HuggingFace API token
+    LOCAL_IMAGE_NAME: Optional local Docker image name
 
 Usage:
     python inference.py
@@ -51,8 +51,9 @@ except ImportError:
 # ---------------------------------------------------------------------------
 
 API_BASE_URL = os.getenv("API_BASE_URL", "https://router.huggingface.co/v1")
-API_KEY = os.getenv("API_KEY") or os.getenv("HF_TOKEN")
-MODEL_NAME = os.getenv("MODEL_NAME", "openai/gpt-oss-120b:novita")
+MODEL_NAME = os.getenv("MODEL_NAME", "Qwen/Qwen2.5-Coder-32B-Instruct")
+HF_TOKEN = os.getenv("HF_TOKEN")
+LOCAL_IMAGE_NAME = os.getenv("LOCAL_IMAGE_NAME")
 
 MAX_EPISODES = 3
 MAX_TOKENS = 4096
@@ -360,10 +361,10 @@ async def play_episode(
 
 
 async def async_main() -> None:
-    if not API_KEY:
-        raise SystemExit("API_KEY (or HF_TOKEN) must be set to query the model.")
+    if not HF_TOKEN:
+        raise SystemExit("HF_TOKEN must be set to query the model.")
 
-    client = OpenAI(base_url=API_BASE_URL, api_key=API_KEY)
+    client = OpenAI(base_url=API_BASE_URL, api_key=HF_TOKEN)
 
     # Connect to environment
     # In production (HF Spaces), this will connect to the running server
