@@ -18,9 +18,9 @@ from openenv.core.env_server.mcp_environment import MCPEnvironment
 from openenv.core.env_server.mcp_types import CallToolAction
 from openenv.core.env_server.types import Action, Observation
 
-from ..models import AVAILABLE_TOOLS, DataCleanState
-from .rewards import compute_reward
-from .tools import DataCleanTools
+from models import AVAILABLE_TOOLS, DataCleanState
+from server.rewards import compute_reward
+from server.tools import DataCleanTools
 
 logger = logging.getLogger(__name__)
 

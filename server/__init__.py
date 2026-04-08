@@ -1,6 +1,6 @@
 """Data Cleaning environment server."""
 
-from .app import app
-from .environment import DataCleanEnvironment
+from server.app import app
+from server.environment import DataCleanEnvironment
 
 __all__ = ["app", "DataCleanEnvironment"]

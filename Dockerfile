@@ -10,20 +10,22 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
-# Install dependencies
+# Copy all project files
 COPY requirements.txt /app/requirements.txt
-COPY data_clean_env/pyproject.toml /app/data_clean_env/pyproject.toml
-COPY data_clean_env/server /app/data_clean_env/server
-COPY data_clean_env/*.py /app/data_clean_env/
-COPY data_clean_env/tasks /app/data_clean_env/tasks
+COPY pyproject.toml /app/pyproject.toml
+COPY server /app/server
+COPY tasks /app/tasks
+COPY models.py /app/models.py
+COPY client.py /app/client.py
+COPY __init__.py /app/__init__.py
 
 RUN pip install --no-cache-dir -r /app/requirements.txt && \
-    pip install --no-cache-dir -e /app/data_clean_env
+    pip install --no-cache-dir -e /app
 
 # Runtime environment configuration
-ENV DATA_CLEAN_TASKS_PATH=/app/data_clean_env/tasks
+ENV DATA_CLEAN_TASKS_PATH=/app/tasks
 ENV DATA_CLEAN_MAX_STEPS=30
 
 EXPOSE 8000
 
-CMD ["uvicorn", "data_clean_env.server.app:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "server.app:app", "--host", "0.0.0.0", "--port", "8000"]

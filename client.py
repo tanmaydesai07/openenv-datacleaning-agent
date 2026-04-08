@@ -19,7 +19,7 @@ from typing import Any, Dict
 
 from openenv.core.mcp_client import MCPToolClient
 
-from .models import DataCleanState
+from models import DataCleanState
 
 
 class DataCleanEnv(MCPToolClient):

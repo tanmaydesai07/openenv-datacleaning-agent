@@ -6,7 +6,7 @@ Environment Variables:
     DATA_CLEAN_MAX_STEPS: Maximum tool calls per episode (default: 30)
 
 Usage:
-    uvicorn data_clean_env.server.app:app --host 0.0.0.0 --port 8000
+    uvicorn server.app:app --host 0.0.0.0 --port 8000
 """
 
 import os
@@ -23,7 +23,7 @@ except ImportError:
 # which requires an exact match, not a subclass.
 from openenv.core.env_server.mcp_types import CallToolAction, CallToolObservation
 
-from .environment import DataCleanEnvironment
+from server.environment import DataCleanEnvironment
 
 DEFAULT_TASKS_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "tasks")
 TASKS_PATH = os.environ.get("DATA_CLEAN_TASKS_PATH", DEFAULT_TASKS_PATH)

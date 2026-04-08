@@ -33,8 +33,8 @@ from openai import OpenAI, RateLimitError
 # Add data_clean_env to path
 sys.path.insert(0, str(Path(__file__).parent))
 
-from data_clean_env.client import DataCleanEnv
-from data_clean_env.models import AVAILABLE_TOOLS
+from client import DataCleanEnv
+from models import AVAILABLE_TOOLS
 
 # Import types needed for actions
 try:
