@@ -199,9 +199,9 @@ def compute_reward(
 
     bounded_reward = max(MIN_SCORE, min(MAX_SCORE, reward))
 
-    logger.info(
-        f"Reward computation: row={row_score:.2f}, col={column_score:.2f}, "
-        f"cell={cell_accuracy:.2f}, raw={reward:.4f}, bounded={bounded_reward:.4f}"
+    logger.debug(
+        f"Reward computation metrics: row={row_score:.6f}, col={column_score:.6f}, "
+        f"cell={cell_accuracy:.6f}, raw_value={reward:.6f}, bounded_value={bounded_reward:.6f}"
     )
 
     return bounded_reward

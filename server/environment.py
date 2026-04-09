@@ -382,9 +382,9 @@ class DataCleanEnvironment(MCPEnvironment):
 
             reward = compute_reward(submitted_path, self._state.clean_file_path)
 
-            logger.info(
+            logger.debug(
                 f"Episode {self._state.episode_id} ended: "
-                f"level={self._state.task_level}, reward={reward:.2f}"
+                f"level={self._state.task_level}, final_value={reward:.6f}"
             )
 
             return Observation(
@@ -438,9 +438,9 @@ class DataCleanEnvironment(MCPEnvironment):
 
             reward = compute_reward(submitted_path, self._state.clean_file_path)
 
-            logger.info(
+            logger.debug(
                 f"Episode {self._state.episode_id} ended: "
-                f"level={self._state.task_level}, reward={reward:.2f}"
+                f"level={self._state.task_level}, final_value={reward:.6f}"
             )
 
             return Observation(

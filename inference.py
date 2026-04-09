@@ -57,7 +57,7 @@ LOCAL_IMAGE_NAME = os.getenv("LOCAL_IMAGE_NAME")
 
 MAX_EPISODES = 3
 MAX_TOKENS = 4096
-VERBOSE = True
+VERBOSE = False
 MIN_REPORTED_SCORE = 1e-4
 MAX_REPORTED_SCORE = 1.0 - 1e-4
 
@@ -399,7 +399,7 @@ async def async_main() -> None:
         avg_steps = sum(r["steps"] for r in results) / len(results)
 
         print(f"Episodes: {len(results)}")
-        print(f"Average reward: {avg_reward:.2f}")
+        print(f"Average reward: {avg_reward:.4f}")
         print(f"Average steps: {avg_steps:.1f}")
 
         # Print breakdown by level
@@ -412,7 +412,7 @@ async def async_main() -> None:
 
         for level, rewards in sorted(by_level.items()):
             avg = sum(rewards) / len(rewards)
-            print(f"  {level}: {avg:.2f} ({len(rewards)} episodes)")
+            print(f"  {level}: {avg:.4f} ({len(rewards)} episodes)")
 
 
 def main() -> None:
