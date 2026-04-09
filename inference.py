@@ -58,6 +58,8 @@ LOCAL_IMAGE_NAME = os.getenv("LOCAL_IMAGE_NAME")
 MAX_EPISODES = 3
 MAX_TOKENS = 4096
 VERBOSE = True
+MIN_REPORTED_SCORE = 1e-4
+MAX_REPORTED_SCORE = 1.0 - 1e-4
 
 SYSTEM_PROMPT = """You are an expert data cleaning agent. Your job is to clean messy CSV files efficiently and accurately.
 
@@ -334,7 +336,8 @@ async def play_episode(
         # Update result for while loop condition
         result = step_result
 
-    reward = result.reward or 0.0
+    raw_reward = float(result.reward) if result.reward is not None else MIN_REPORTED_SCORE
+    reward = max(MIN_REPORTED_SCORE, min(MAX_REPORTED_SCORE, raw_reward))
 
     # [END] log - required hackathon format
     print(
@@ -344,7 +347,7 @@ async def play_episode(
     if VERBOSE:
         outcome = "SUCCESS" if reward > 0.7 else "PARTIAL" if reward > 0.3 else "FAILED"
         print(f"\nResult: {outcome}")
-        print(f"  Reward: {reward:.2f}")
+        print(f"  Reward: {reward:.4f}")
 
     return {
         "episode": episode_num,
