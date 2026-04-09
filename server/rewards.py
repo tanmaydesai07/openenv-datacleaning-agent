@@ -9,9 +9,10 @@ import logging
 from typing import Optional, Tuple
 
 logger = logging.getLogger(__name__)
-# Use a larger epsilon so serialized/rounded scores still stay strictly inside (0, 1).
-MIN_SCORE = 1e-4
-MAX_SCORE = 1.0 - 1e-4
+# Use a much smaller epsilon to handle floating-point precision issues
+# Scores must be strictly between 0 and 1 (not 0.0 and not 1.0)
+MIN_SCORE = 1e-15
+MAX_SCORE = 1.0 - 1e-15
 
 
 def load_csv(file_path: str) -> Tuple[list, list]:
