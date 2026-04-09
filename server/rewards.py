@@ -51,10 +51,11 @@ def compute_row_score(submitted_rows: list, expected_rows: list) -> float:
         expected_rows: List of rows from expected file
 
     Returns:
-        Score between 0.0 and 1.0
+        Score between MIN_SCORE and MAX_SCORE (strictly inside (0, 1))
     """
     if not expected_rows:
-        return 1.0 if not submitted_rows else 0.0
+        raw = 1.0 if not submitted_rows else 0.0
+        return max(MIN_SCORE, min(MAX_SCORE, raw))
 
     # Create normalized row tuples for comparison
     expected_set = {
@@ -68,7 +69,8 @@ def compute_row_score(submitted_rows: list, expected_rows: list) -> float:
 
     # Count matching rows
     matches = len(expected_set & submitted_set)
-    return matches / len(expected_rows)
+    raw = matches / len(expected_rows)
+    return max(MIN_SCORE, min(MAX_SCORE, raw))
 
 
 def compute_column_score(submitted_headers: list, expected_headers: list) -> float:
@@ -80,16 +82,18 @@ def compute_column_score(submitted_headers: list, expected_headers: list) -> flo
         expected_headers: List of headers from expected file
 
     Returns:
-        Score between 0.0 and 1.0
+        Score between MIN_SCORE and MAX_SCORE (strictly inside (0, 1))
     """
     if not expected_headers:
-        return 1.0 if not submitted_headers else 0.0
+        raw = 1.0 if not submitted_headers else 0.0
+        return max(MIN_SCORE, min(MAX_SCORE, raw))
 
     expected_set = {normalize_value(h) for h in expected_headers}
     submitted_set = {normalize_value(h) for h in submitted_headers}
 
     matches = len(expected_set & submitted_set)
-    return matches / len(expected_headers)
+    raw = matches / len(expected_headers)
+    return max(MIN_SCORE, min(MAX_SCORE, raw))
 
 
 def compute_cell_accuracy(submitted_rows: list, expected_rows: list) -> float:
@@ -103,10 +107,11 @@ def compute_cell_accuracy(submitted_rows: list, expected_rows: list) -> float:
         expected_rows: List of rows from expected file
 
     Returns:
-        Score between 0.0 and 1.0
+        Score between MIN_SCORE and MAX_SCORE (strictly inside (0, 1))
     """
     if not expected_rows:
-        return 1.0 if not submitted_rows else 0.0
+        raw = 1.0 if not submitted_rows else 0.0
+        return max(MIN_SCORE, min(MAX_SCORE, raw))
 
     total_cells = 0
     correct_cells = 0
@@ -140,9 +145,10 @@ def compute_cell_accuracy(submitted_rows: list, expected_rows: list) -> float:
                 correct_cells += 1
 
     if total_cells == 0:
-        return 0.0
+        return MIN_SCORE
 
-    return correct_cells / total_cells
+    raw = correct_cells / total_cells
+    return max(MIN_SCORE, min(MAX_SCORE, raw))
 
 
 def compute_reward(
