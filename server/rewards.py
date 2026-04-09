@@ -9,6 +9,8 @@ import logging
 from typing import Optional, Tuple
 
 logger = logging.getLogger(__name__)
+MIN_SCORE = 1e-6
+MAX_SCORE = 1.0 - 1e-6
 
 
 def load_csv(file_path: str) -> Tuple[list, list]:
@@ -165,8 +167,8 @@ def compute_reward(
         Reward between 0.0 and 1.0
     """
     if not submitted_file_path:
-        logger.info("No file submitted, reward = 0.0")
-        return 0.0
+        logger.info("No file submitted, returning minimum bounded reward")
+        return MIN_SCORE
 
     # Load files
     expected_headers, expected_rows = load_csv(expected_file_path)
@@ -174,13 +176,13 @@ def compute_reward(
 
     if not expected_headers or not expected_rows:
         logger.error(f"Failed to load expected file: {expected_file_path}")
-        return 0.0
+        return MIN_SCORE
 
     if not submitted_headers or not submitted_rows:
         logger.warning(
             f"Failed to load submitted file or file is empty: {submitted_file_path}"
         )
-        return 0.0
+        return MIN_SCORE
 
     # Compute component scores
     row_score = compute_row_score(submitted_rows, expected_rows)
@@ -194,9 +196,11 @@ def compute_reward(
         + cell_weight * cell_accuracy
     )
 
+    bounded_reward = max(MIN_SCORE, min(MAX_SCORE, reward))
+
     logger.info(
         f"Reward computation: row={row_score:.2f}, col={column_score:.2f}, "
-        f"cell={cell_accuracy:.2f}, final={reward:.2f}"
+        f"cell={cell_accuracy:.2f}, raw={reward:.4f}, bounded={bounded_reward:.4f}"
     )
 
-    return reward
+    return bounded_reward
