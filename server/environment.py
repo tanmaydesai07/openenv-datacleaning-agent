@@ -23,6 +23,7 @@ from server.rewards import compute_reward
 from server.tools import DataCleanTools
 
 logger = logging.getLogger(__name__)
+MIN_SCORE = 1e-4
 
 
 class DataCleanEnvironment(MCPEnvironment):
@@ -324,7 +325,7 @@ class DataCleanEnvironment(MCPEnvironment):
 
         return Observation(
             done=False,
-            reward=0.0,
+            reward=MIN_SCORE,
             metadata={
                 "task_level": task["level"],
                 "task_description": task["description"],
@@ -347,7 +348,7 @@ class DataCleanEnvironment(MCPEnvironment):
         """
         return Observation(
             done=False,
-            reward=0.0,
+            reward=MIN_SCORE,
             metadata={
                 "error": f"Unknown action type: {type(action).__name__}. "
                 "Use ListToolsAction or CallToolAction for MCP interactions."
@@ -404,7 +405,7 @@ class DataCleanEnvironment(MCPEnvironment):
             )
             return Observation(
                 done=True,
-                reward=0.0,
+                reward=MIN_SCORE,
                 metadata={
                     **obs.metadata,
                     "error": f"Max steps ({self.max_steps}) reached without submitting file.",
@@ -459,7 +460,7 @@ class DataCleanEnvironment(MCPEnvironment):
             )
             return Observation(
                 done=True,
-                reward=0.0,
+                reward=MIN_SCORE,
                 metadata={
                     **obs.metadata,
                     "error": f"Max steps ({self.max_steps}) reached without submitting file.",
