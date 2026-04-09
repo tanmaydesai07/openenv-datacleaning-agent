@@ -23,7 +23,7 @@ from server.rewards import compute_reward
 from server.tools import DataCleanTools
 
 logger = logging.getLogger(__name__)
-MIN_SCORE = 1e-4
+MIN_SCORE = 0.01
 
 
 class DataCleanEnvironment(MCPEnvironment):

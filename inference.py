@@ -58,8 +58,8 @@ LOCAL_IMAGE_NAME = os.getenv("LOCAL_IMAGE_NAME")
 MAX_EPISODES = 3
 MAX_TOKENS = 4096
 VERBOSE = False
-MIN_REPORTED_SCORE = 1e-4
-MAX_REPORTED_SCORE = 1.0 - 1e-4
+MIN_REPORTED_SCORE = 0.01
+MAX_REPORTED_SCORE = 0.99
 
 SYSTEM_PROMPT = """You are an expert data cleaning agent. Your job is to clean messy CSV files efficiently and accurately.
 
