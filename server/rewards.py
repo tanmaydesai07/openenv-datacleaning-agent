@@ -11,8 +11,8 @@ from typing import Optional, Tuple
 logger = logging.getLogger(__name__)
 # Use a much smaller epsilon to handle floating-point precision issues
 # Scores must be strictly between 0 and 1 (not 0.0 and not 1.0)
-MIN_SCORE = 1e-15
-MAX_SCORE = 1.0 - 1e-15
+MIN_SCORE = 1e-6
+MAX_SCORE = 1.0 - 1e-6
 
 
 def load_csv(file_path: str) -> Tuple[list, list]:
