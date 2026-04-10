@@ -341,7 +341,7 @@ async def play_episode(
 
     # [END] log - required hackathon format
     print(
-        f"[END] task_id={task_id}, episode={episode_num}, level={task_level}, reward={reward:.4f}, steps={step_count}"
+        f"[END] task_id={task_id}, episode={episode_num}, level={task_level}, reward={reward:.6f}, steps={step_count}"
     )
 
     if VERBOSE:
