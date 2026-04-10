@@ -24,6 +24,20 @@ from server.tools import DataCleanTools
 
 logger = logging.getLogger(__name__)
 MIN_SCORE = 0.01
+MAX_SCORE = 0.99
+
+
+def _clamp_reward(obs: Observation) -> Observation:
+    """Clamp obs.reward strictly to (MIN_SCORE, MAX_SCORE) in-place and return obs."""
+    if obs.reward is not None:
+        clamped = max(MIN_SCORE, min(MAX_SCORE, float(obs.reward)))
+        try:
+            obs.reward = clamped
+        except (AttributeError, TypeError):
+            # If Observation is immutable, we can't do much — values from
+            # compute_reward are already bounded, so this is just a safety net.
+            pass
+    return obs
 
 
 class DataCleanEnvironment(MCPEnvironment):
@@ -323,7 +337,7 @@ class DataCleanEnvironment(MCPEnvironment):
 
         logger.info(f"Reset episode {self._state.episode_id} with {task['level']} task")
 
-        return Observation(
+        return _clamp_reward(Observation(
             done=False,
             reward=MIN_SCORE,
             metadata={
@@ -335,7 +349,7 @@ class DataCleanEnvironment(MCPEnvironment):
                 "step_count": 0,
                 "available_tools": AVAILABLE_TOOLS.copy(),
             },
-        )
+        ))
 
     def _step_impl(
         self,
@@ -346,14 +360,14 @@ class DataCleanEnvironment(MCPEnvironment):
         """
         Handle non-MCP actions. Returns an error since this env is MCP-only.
         """
-        return Observation(
+        return _clamp_reward(Observation(
             done=False,
             reward=MIN_SCORE,
             metadata={
                 "error": f"Unknown action type: {type(action).__name__}. "
                 "Use ListToolsAction or CallToolAction for MCP interactions."
             },
-        )
+        ))
 
     def step(
         self,
@@ -387,7 +401,7 @@ class DataCleanEnvironment(MCPEnvironment):
                 f"level={self._state.task_level}, final_value={reward:.6f}"
             )
 
-            return Observation(
+            return _clamp_reward(Observation(
                 done=True,
                 reward=reward,
                 metadata={
@@ -396,23 +410,23 @@ class DataCleanEnvironment(MCPEnvironment):
                     "expected_file": self._state.clean_file_path,
                     "final_reward": reward,
                 },
-            )
+            ))
 
         # Check for max steps
         if self._state.step_count >= self.max_steps:
             logger.info(
                 f"Episode {self._state.episode_id} terminated: max steps reached"
             )
-            return Observation(
+            return _clamp_reward(Observation(
                 done=True,
                 reward=MIN_SCORE,
                 metadata={
                     **obs.metadata,
                     "error": f"Max steps ({self.max_steps}) reached without submitting file.",
                 },
-            )
+            ))
 
-        return obs
+        return _clamp_reward(obs)
 
     async def step_async(
         self,
@@ -443,7 +457,7 @@ class DataCleanEnvironment(MCPEnvironment):
                 f"level={self._state.task_level}, final_value={reward:.6f}"
             )
 
-            return Observation(
+            return _clamp_reward(Observation(
                 done=True,
                 reward=reward,
                 metadata={
@@ -452,22 +466,22 @@ class DataCleanEnvironment(MCPEnvironment):
                     "expected_file": self._state.clean_file_path,
                     "final_reward": reward,
                 },
-            )
+            ))
 
         if self._state.step_count >= self.max_steps:
             logger.info(
                 f"Episode {self._state.episode_id} terminated: max steps reached"
             )
-            return Observation(
+            return _clamp_reward(Observation(
                 done=True,
                 reward=MIN_SCORE,
                 metadata={
                     **obs.metadata,
                     "error": f"Max steps ({self.max_steps}) reached without submitting file.",
                 },
-            )
+            ))
 
-        return obs
+        return _clamp_reward(obs)
 
     @property
     def state(self) -> DataCleanState:

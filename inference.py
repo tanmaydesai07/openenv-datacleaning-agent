@@ -201,10 +201,11 @@ async def play_episode(
     messy_file_path = getattr(state, "messy_file_path", "") or ""
     # Extract just the filename from the full path
     messy_file = os.path.basename(messy_file_path) if messy_file_path else ""
+    task_name = f"data_clean_{task_level}_{task_id}"
 
     # [START] log - required hackathon format
     print(
-        f"[START] task_id={task_id}, episode={episode_num}, level={task_level}, messy_file={messy_file}"
+        f"[START] task={task_name} env=data_clean_env model={MODEL_NAME}"
     )
 
     if VERBOSE:
@@ -223,137 +224,165 @@ async def play_episode(
         },
     ]
     step_count = 0
+    step_rewards: List[float] = []   # per-step rewards for [END] rewards= field
+    score = MIN_REPORTED_SCORE       # safe default in case of exception
+    success = False
 
-    while not result.done:
-        step_count += 1
-        if VERBOSE:
-            print(f"\n--- Step {step_count} ---")
+    try:
+        while not result.done:
+            step_count += 1
+            if VERBOSE:
+                print(f"\n--- Step {step_count} ---")
 
-        # Retry loop for rate limits
-        max_retries = 3
-        for attempt in range(max_retries):
-            try:
-                response = client.chat.completions.create(
-                    model=MODEL_NAME,
-                    messages=chat_history,
-                    tools=tools,
-                    tool_choice="auto",
-                    max_completion_tokens=MAX_TOKENS,
-                )
-                break
-            except RateLimitError as e:
-                wait_time = 30 * (attempt + 1)
-                print(
-                    f"[WARN] Rate limit hit, waiting {wait_time}s... (attempt {attempt + 1}/{max_retries})"
-                )
-                time.sleep(wait_time)
-                if attempt == max_retries - 1:
-                    print(
-                        f"[ERROR] Rate limit exceeded after {max_retries} retries. Submitting best effort."
+            step_error = "null"
+
+            # Retry loop for rate limits
+            max_retries = 3
+            response = None
+            for attempt in range(max_retries):
+                try:
+                    response = client.chat.completions.create(
+                        model=MODEL_NAME,
+                        messages=chat_history,
+                        tools=tools,
+                        tool_choice="auto",
+                        max_completion_tokens=MAX_TOKENS,
                     )
-                    # Force submit
-                    tool_name = "submit_cleaned_file"
-                    tool_args = {"path": "cleaned_output.csv"}
-                    tool_call_id = "none"
-                    response = None
                     break
+                except RateLimitError:
+                    wait_time = 30 * (attempt + 1)
+                    print(
+                        f"[WARN] Rate limit hit, waiting {wait_time}s... (attempt {attempt + 1}/{max_retries})"
+                    )
+                    time.sleep(wait_time)
+                    if attempt == max_retries - 1:
+                        step_error = "rate_limit_exceeded"
+                        # Force submit
+                        tool_name = "submit_cleaned_file"
+                        tool_args = {"path": "cleaned_output.csv"}
+                        tool_call_id = "none"
+                        response = None
+                        break
 
-        # If rate limit exhausted, skip to action execution with forced submit
-        if response is None:
-            pass  # tool_name, tool_args, tool_call_id already set above
-        else:
-            message = response.choices[0].message
+            # If rate limit exhausted, skip to action execution with forced submit
+            if response is None:
+                pass  # tool_name, tool_args, tool_call_id already set above
+            else:
+                message = response.choices[0].message
 
-            if not message.tool_calls:
-                # Fallback if no tool call
+                if not message.tool_calls:
+                    # Fallback if no tool call
+                    tool_name = "submit_cleaned_file"
+                    tool_args = {"path": "cleaned.csv"}
+                    tool_call_id = "none"
+                    step_error = "no_tool_call_fallback"
+                else:
+                    tool_call_obj = message.tool_calls[0]
+                    tool_name = tool_call_obj.function.name
+                    tool_args = json.loads(tool_call_obj.function.arguments)
+                    tool_call_id = tool_call_obj.id
+
+                chat_history.append(
+                    {
+                        "role": "assistant",
+                        "content": None,
+                        "tool_calls": [
+                            {
+                                "id": tool_call_id,
+                                "type": "function",
+                                "function": {
+                                    "name": tool_name,
+                                    "arguments": json.dumps(tool_args)
+                                    if tool_call_id == "none"
+                                    else tool_call_obj.function.arguments,
+                                },
+                            }
+                        ],
+                    }
+                )
+
+            if VERBOSE:
+                args_str = json.dumps(tool_args)
+                if len(args_str) > 100:
+                    args_str = args_str[:100] + "..."
+                print(f"Tool: {tool_name}({args_str})")
+
+            if tool_name not in tool_names:
                 tool_name = "submit_cleaned_file"
                 tool_args = {"path": "cleaned.csv"}
-                tool_call_id = "none"
-            else:
-                tool_call_obj = message.tool_calls[0]
-                tool_name = tool_call_obj.function.name
-                tool_args = json.loads(tool_call_obj.function.arguments)
-                tool_call_id = tool_call_obj.id
 
-            chat_history.append(
-                {
-                    "role": "assistant",
-                    "content": None,
-                    "tool_calls": [
-                        {
-                            "id": tool_call_id,
-                            "type": "function",
-                            "function": {
-                                "name": tool_name,
-                                "arguments": json.dumps(tool_args)
-                                if tool_call_id == "none"
-                                else tool_call_obj.function.arguments,
-                            },
-                        }
-                    ],
-                }
+            # Execute action
+            action = CallToolAction(tool_name=tool_name, arguments=tool_args)
+            step_result = await env.step(action)
+            obs = step_result.observation
+            result_text = (
+                obs.result if hasattr(obs, "result") else str(getattr(obs, "metadata", {}))
             )
 
-        # [STEP] log - required hackathon format
-        args_str_log = json.dumps(tool_args)
-        if len(args_str_log) > 200:
-            args_str_log = args_str_log[:200] + "..."
-        print(
-            f"[STEP] task_id={task_id}, step={step_count}, tool={tool_name}, args={args_str_log}"
-        )
+            # Clamp and record the step-level reward
+            raw_step_reward = float(step_result.reward) if step_result.reward is not None else MIN_REPORTED_SCORE
+            step_reward = max(MIN_REPORTED_SCORE, min(MAX_REPORTED_SCORE, raw_step_reward))
+            step_rewards.append(step_reward)
 
-        if VERBOSE:
-            args_str = json.dumps(tool_args)
-            if len(args_str) > 100:
-                args_str = args_str[:100] + "..."
-            print(f"Tool: {tool_name}({args_str})")
+            # Build action string for log (truncated, no newlines)
+            action_str = f"{tool_name}({json.dumps(tool_args)[:80]})".replace("\n", " ")
 
-        if tool_name not in tool_names:
-            tool_name = "submit_cleaned_file"
-            tool_args = {"path": "cleaned.csv"}
-
-        # Execute action
-        action = CallToolAction(tool_name=tool_name, arguments=tool_args)
-        step_result = await env.step(action)
-        obs = step_result.observation
-        result_text = (
-            obs.result if hasattr(obs, "result") else str(getattr(obs, "metadata", {}))
-        )
-
-        if not step_result.done:
-            chat_history.append(
-                {
-                    "role": "tool",
-                    "tool_call_id": tool_call_id,
-                    "content": str(result_text) or "No result",
-                }
+            # [STEP] log - required hackathon format
+            print(
+                f"[STEP] step={step_count} action={action_str} "
+                f"reward={step_reward:.2f} done={str(step_result.done).lower()} "
+                f"error={step_error}"
             )
 
-        if VERBOSE:
-            result_preview = str(result_text)[:300]
-            print(f"Result: {result_preview}...")
+            if not step_result.done:
+                chat_history.append(
+                    {
+                        "role": "tool",
+                        "tool_call_id": tool_call_id,
+                        "content": str(result_text) or "No result",
+                    }
+                )
 
-        # Update result for while loop condition
-        result = step_result
+            if VERBOSE:
+                print(f"Result: {str(result_text)[:300]}")
 
-    raw_reward = float(result.reward) if result.reward is not None else MIN_REPORTED_SCORE
-    reward = max(MIN_REPORTED_SCORE, min(MAX_REPORTED_SCORE, raw_reward))
+            # Update result for while loop condition
+            result = step_result
 
-    # [END] log - required hackathon format
+        # Final score from last observation
+        raw_reward = float(result.reward) if result.reward is not None else MIN_REPORTED_SCORE
+        score = max(MIN_REPORTED_SCORE, min(MAX_REPORTED_SCORE, raw_reward))
+        success = score >= 0.5
+
+    except Exception as exc:
+        print(f"[ERROR] Episode {episode_num} failed with exception: {exc}")
+        score = MIN_REPORTED_SCORE
+        success = False
+        if not step_rewards:
+            step_rewards.append(MIN_REPORTED_SCORE)
+
+    # Ensure rewards list is never empty
+    if not step_rewards:
+        step_rewards.append(score)
+
+    rewards_str = ",".join(f"{r:.2f}" for r in step_rewards)
+
+    # [END] log - required hackathon format (always emitted, even on exception)
     print(
-        f"[END] task_id={task_id}, episode={episode_num}, level={task_level}, reward={reward:.6f}, steps={step_count}"
+        f"[END] success={str(success).lower()} steps={step_count} "
+        f"score={score:.2f} rewards={rewards_str}"
     )
 
     if VERBOSE:
-        outcome = "SUCCESS" if reward > 0.7 else "PARTIAL" if reward > 0.3 else "FAILED"
+        outcome = "SUCCESS" if success else "PARTIAL" if score > 0.3 else "FAILED"
         print(f"\nResult: {outcome}")
-        print(f"  Reward: {reward:.4f}")
+        print(f"  Score: {score:.4f}")
 
     return {
         "episode": episode_num,
         "task_id": task_id,
         "level": task_level,
-        "reward": reward,
+        "reward": score,
         "steps": step_count,
     }
 
